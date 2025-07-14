@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff8f0;
+  color: #333;
+}
+
+header {
+  background-color: #b71c1c;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.logo-encabezado {
+  height: 70px;
+  border-radius: 10px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #ffe0b2;
+  margin: 0;
+}
+
+nav ul li {
+  margin: 5px 15px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #4e342e;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #b71c1c;
+}
+
+main {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+  padding-bottom: 100px;
+}
+
+section {
+  display: none;
+}
+
+section.active {
+  display: block;
+}
+
+h2 {
+  color: #b71c1c;
+  text-align: center;
+  border-bottom: 3px solid #ffcc00;
+  padding-bottom: 10px;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 800;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+ul {
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
+ul li {
+  font-size: 1.15rem;
+  color: #4e342e;
+  font-weight: 600;
+  padding: 8px 0;
+  border-bottom: 1px dashed #ddd;
+  transition: transform 0.2s ease-in-out;
+}
+
+ul li:hover {
+  transform: scale(1.02);
+  color: #b71c1c;
+}
+
+ul li strong {
+  color: #d84315;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.bienvenida {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #b71c1c;
+  margin-bottom: 10px;
+  font-weight: 800;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sub-bienvenida {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #4e342e;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.plato {
+  display: block;
+  max-width: 100%;
+  margin: 20px auto;
+  border-radius: 15px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+  background-color: #4e342e;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  font-size: 0.9rem;
+}
+
+.boton-pedido {
+  display: inline-block;
+  background-color: #ff5722;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  margin: 20px auto;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.boton-pedido:hover {
+  background-color: #e64a19;
+}
+
+a {
+  color: #b71c1c;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.contacto-info {
+  background-color: #fff3e0;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  color: #4e342e;
+}
+
+.contacto-info a {
+  color: #b71c1c;
+  font-weight: bold;
+}
+
+.contacto-info a:hover {
+  text-decoration: underline;
+}
+
+.inicio-seccion {
+  text-align: center;
+  padding: 60px 20px;
+  background: url('img/fondo-pollo.jpg') no-repeat center center/cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  color: white;
+}
+
+.contenido-inicio {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  border-radius: 12px;
+  max-width: 700px;
+  margin: auto;
+}
+
+.resaltado {
+  color: #ffcc00;
+  font-weight: 900;
+}
+
+.frase-inicio {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #4e342e;
+  background: linear-gradient(145deg, #fff8f0, #fbe9e7);
+  padding: 30px;
+  border-radius: 16px;
+  margin: 40px auto 20px;
+  max-width: 700px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  position: relative;
+  font-style: italic;
+  line-height: 1.8;
+}
+
+.frase-inicio::before {
+  content: "“";
+  font-size: 3rem;
+  position: absolute;
+  top: -20px;
+  left: 25px;
+  color: #d84315;
+  font-family: Georgia, serif;
+}
+
+.frase-inicio::after {
+  content: "”";
+  font-size: 3rem;
+  position: absolute;
+  bottom: -25px;
+  right: 25px;
+  color: #d84315;
+  font-family: Georgia, serif;
+}
+
+.frase-inicio .clave {
+  color: #b71c1c;
+  font-weight: 900;
+  font-style: normal;
+  font-size: 1.6rem;
+  text-shadow: 1px 1px 2px #fce4ec;
+}
+
+.frase-inicio .firma {
+  display: block;
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #6d4c41;
+  font-weight: bold;
+  font-style: normal;
+  letter-spacing: 1px;
+  font-family: 'Georgia', serif;
+  text-transform: uppercase;
+}
+.precio-naranja {
+  color: #ff5722;
+  font-weight: bold;
+}
+.nombre-plato {
+  font-weight: 700;
+  color: #333;
+}
+
+.precio {
+  color: #ff5722;
+  font-weight: 700;
+}
+.titulo-parrilla {
+  color: #000000;        /* negro puro */
+  font-weight: 900;      /* extra negrita */
+  font-size: 1.1rem;     /* ligeramente más grande si deseas */
+}
+
