@@ -1,656 +1,1076 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pollería Malcas</title>
-<!-- Etiqueta de Google (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRCNZK79EH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-ZRCNZK79EH');
-</script>
-
-    <link rel="stylesheet" href="estilos.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pollería Malca's — Delivery</title>
+    <meta name="description" content="Pollos a la brasa, parrillas y platos criollos. Delivery rápido. Pide por WhatsApp." />
+    <meta name="theme-color" content="#d62828" />
+    <!-- Fuente -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="img/favicon.png" />
   </head>
   <body>
-    <header>
-      <div class="encabezado">
-        <img
-          src="img/logo.png.jpg"
-          alt="Logo Pollería Malcas"
-          class="logo-encabezado"
-        />
-        <h1>Pollería Malca´s</h1>
+    <!-- Top bar -->
+    <div class="topbar">
+      <div class="container">
+        <span>🚚✨ Delivery Gratis 🆓 </span>
+        <span>⏰ Hoy: 12:00 pm – 11:45 pm</span>
+        <span>📍 Ventanilla</span>
       </div>
-      <nav>
-        <ul>
-          <li><a href="#" onclick="mostrarSeccion('inicio')">Inicio🏠 </a></li>
-          <li>
-            <a href="#" onclick="mostrarSeccion('pollos')"
-              >Pollos y Combos 🍗</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="mostrarSeccion('parrillas')">Parrillas 🔥</a>
-          </li>
-          <li>
-            <a href="#" onclick="mostrarSeccion('criollos')"
-              >Platos Criollos 🍛</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="mostrarSeccion('alitas')"
-              >Alitas 🍗</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="mostrarSeccion('guarniciones')"
-              >Guarniciones 🍟🍚</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="mostrarSeccion('arroces')"
-              >Chaufas y Aeropuerto 🍚</a
-            >
-          </li>
-          <li><a href="#" onclick="mostrarSeccion('sopas')">Sopas 🥣 </a></li>
-          <li>
-            <a href="#" onclick="mostrarSeccion('ensaladas')">Ensaladas 🥗 </a>
-          </li>
-          <li>
-            <a href="#" onclick="mostrarSeccion('bebidas')">Bebidas 🥤 </a>
-          </li>
-          <li>
-            <a href="#" onclick="mostrarSeccion('contacto')">Contacto 📞</a>
-          </li>
-        </ul>
+    </div>
+
+    <!-- Header -->
+    <header class="header container">
+      <div class="brand">
+        <!-- Renombra a 'imagenes/logo.jpg' (sin espacio) -->
+        <img src="imagenes/logo .jpg" alt="Pollería Malca's" class="logo" loading="lazy" />
+        <div>
+          <h1>Pollería Malca's</h1>
+          <p>Sabroso, rápido y al toque 🔥</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#menu">Menú</a>
+        <a href="#promos">Promos</a>
+        <a href="#contacto">Contacto</a>
+        <button id="openCart" class="btn cart-btn">
+          🛒 Ver carrito <span id="cart-count">0</span>
+        </button>
       </nav>
     </header>
 
-    <main>
-      <section id="inicio" class="active inicio-seccion">
-        <div class="contenido-inicio">
-          <h2 class="bienvenida">
-            ¡Bienvenidos a <span class="resaltado">Pollería Malca´s</span>!
-          </h2>
-          <p class="sub-bienvenida">
-            Disfruta del mejor sabor a la leña con nuestras irresistibles
-            promociones.
-          </p>
-          <a
-            href="https://wa.me/51972506141"
-            target="_blank"
-            class="boton-pedido"
-          >
-            📲 Haz tu pedido ahora
-          </a>
-          <blockquote class="frase-inicio">
-            <span class="cita">El secreto está en el</span>
-            <span class="clave">sabor</span>,
-            <span class="cita">el</span>
-            <span class="clave">cariño</span>
-            <span class="cita">y la</span>
-            <span class="clave">leña</span>.
-            <br />
-            <span class="firma">— Pollos Malca´s —</span>
-          </blockquote>
+    <!-- Hero -->
+    <section class="hero container" id="inicio">
+      <div class="hero-text">
+        <h2>El mejor <span class="hl">pollo a la leña</span> de la zona</h2>
+        <p>Haz tu pedido en 3 clics y te escribimos por WhatsApp para confirmar.</p>
+        <a href="#menu" class="btn btn-primary">Ver Menú</a>
+      </div>
+      <img src="imagenes/pollo.jpg" alt="Pollo a la brasa" class="hero-img" loading="lazy" />
+    </section>
+
+    <!-- Menú + filtros -->
+    <section id="menu" class="container">
+      <div class="section-head">
+        <h3>Menú</h3>
+        <div class="filters">
+          <button class="chip active" data-filter="all">Todos</button>
+          <button class="chip" data-filter="pollos">Pollos y Combos</button>
+          <button class="chip" data-filter="parrillas">Parrillas</button>
+          <button class="chip" data-filter="criollos">Platos Criollos</button>
+          <button class="chip" data-filter="alitas">Alitas</button>
+          <button class="chip" data-filter="guarniciones">Guarniciones</button>
+          <button class="chip" data-filter="chaufas">Chaufas y Aeropuerto</button>
+          <button class="chip" data-filter="sopas">Sopas</button>
+          <button class="chip" data-filter="ensaladas">Ensaladas</button>
+          <button class="chip" data-filter="bebidas">Bebidas</button>
         </div>
-      </section>
-      <section id="pollos">
-        <h2>Pollos y Combos</h2>
-        <ul>
-          <li>
-            <strong style="color: #000">MOSTRITO</strong> —
-            <span class="precio-naranja">S/ 17.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">1/4 POLLO A LA LEÑA</strong> —
-            <span class="precio-naranja">S/ 18.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">MOSTRITO A LA PARRILLA</strong> —
-            <span class="precio-naranja">S/ 19.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">MOSTRO</strong> —
-            <span class="precio-naranja">S/ 22.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">MOSTRO A LA PARRILLA</strong> —
-            <span class="precio-naranja">S/ 25.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">1/2 POLLO A LA LEÑA</strong> —
-            <span class="precio-naranja">S/ 35.00</span>
-          </li>
+        <input id="search" class="search" placeholder="Buscar: Promociones, Lomo, Chicha..." />
+      </div>
 
-          <li>
-            <strong style="color: #000">COMBO MALCA´S EXTREMO</strong> —
-            <span class="precio-naranja">S/ 50.00</span><br />
-            <em
-              >Incluye: 1/2 pollo + porción de arroz chaufa + papas amarillas
-              fritas + gaseosa de 1/2 litro + ensalada</em
-            >
-          </li>
+      <!-- Grid productos (TODAS las categorías aquí para que los filtros funcionen) -->
+      <div id="product-grid" class="grid">
+        <!-- ====== Pollos y Combos ====== -->
+        <article class="card" data-cat="pollos" data-name="Mostrito" data-price="17">
+          <img src="imagenes/mostrito.jpg" alt="Mostrito" loading="lazy" />
+          <div class="card-body">
+            <h4>Mostrito</h4>
+            <p>Con papas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 17.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-          <li>
-            <strong style="color: #000">COMBO MALCA´S</strong> —
-            <span class="precio-naranja">S/ 28.00</span><br />
-            <em
-              >Incluye: 1/4 de pollo a la leña + 1 palo de anticucho + 1 chorizo
-              + papas fritas + ensalada</em
-            >
-          </li>
+        <article class="card" data-cat="pollos" data-name="Mostrito a la Parrilla" data-price="19">
+          <img src="imagenes/mostrito a la parrilla.png" alt="Mostrito a la Parrilla" loading="lazy" />
+          <div class="card-body">
+            <h4>Mostrito a la Parrilla</h4>
+            <p>Con papas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 19.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-          <li>
-            <strong style="color: #000">1 POLLO + TEQUEÑOS</strong> —
-            <span class="precio-naranja">S/ 74.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">1 POLLO + CHAUFA DE POLLO</strong> —
-            <span class="precio-naranja">S/ 72.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">1 POLLO + BEBIDA DE 1.5 LT</strong> —
-            <span class="precio-naranja">S/ 72.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">1 POLLO A LA LEÑA</strong> —
-            <span class="precio-naranja">S/ 67.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">1 POLLO + 1/4 POLLO A LA LEÑA</strong> —
-            <span class="precio-naranja">S/ 72.00</span>
-          </li>
-          <li>
-            <strong style="color: #000"
-              >1 POLLO + 1/4 POLLO A LA LEÑA + GASEOSA 1.5 LT</strong
-            >
-            — <span class="precio-naranja">S/ 79.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">1 POLLO + 1/2 POLLO A LA LEÑA</strong> —
-            <span class="precio-naranja">S/ 92.00</span>
-          </li>
-          <li>
-            <strong style="color: #000"
-              >1 POLLO + 1/2 POLLO A LA LEÑA + 1.5 LT</strong
-            >
-            — <span class="precio-naranja">S/ 98.00</span>
-          </li>
-          <li>
-            <strong style="color: #000"
-              >2 POLLOS A LA LEÑA + 2 GASEOSAS 1.5 LT</strong
-            >
-            — <span class="precio-naranja">S/ 135.00</span>
-          </li>
-        </ul>
-      </section>
-      <section id="parrillas">
-        <h2>🥩 Parillas</h2>
-        <ul>
-          <li>
-            <strong class="titulo-parrilla">PARRILLA PARA DOS</strong><br />
-            01 Churrasco + 1 Chuleta + Chorizo + 1 Palito de anticucho + Porción
-            de Mollejita + 1/4 de pollo a la leña + papa amarilla fritas +
-            ensalada — <span class="precio">S/ 85.00</span>
-          </li>
+        <article class="card" data-cat="pollos" data-name="Mostro" data-price="22">
+          <img src="imagenes/mostro.jpg" alt="Mostro" loading="lazy" />
+          <div class="card-body">
+            <h4>Mostro</h4>
+            <p>Porción grande con guarnición.</p>
+            <div class="price-actions"><span class="price">S/ 22.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-          <li>
-            <strong class="titulo-parrilla">PARRILLA FAMILIAR</strong><br />
-            01 Churrasco + 1 Chuleta + 1 Churrasco + 2 Palitos de anticucho + 2
-            chorizos + porción de mollejitas + 1/2 pollo a la leña + papas
-            amarillas fritas + ensalada + gaseosa de 1.5 litros —
-            <span class="precio">S/ 115.00</span>
-          </li>
-        </ul>
+        <article class="card" data-cat="pollos" data-name="Mostro a la Parrilla" data-price="25">
+          <img src="imagenes/mostro-parrilla.jpg" alt="Mostro a la Parrilla" loading="lazy" />
+          <div class="card-body">
+            <h4>Mostro a la Parrilla</h4>
+            <p>Porción grande con guarnición.</p>
+            <div class="price-actions"><span class="price">S/ 25.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-        <h2>🥩 Carnes a la Parrilla</h2>
-        <ul>
-          <li>
-            <strong style="color: #000">Pechuga de pollo a la parrilla</strong>
-            — <span class="precio-naranja">S/ 25.00</span>
-          </li>
-          <li>
-            <strong style="color: #000"
-              >Pechuga rellena (tocino y queso mozzarella)</strong
-            >
-            — <span class="precio-naranja">S/ 25.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Bife a la parrilla</strong> —
-            <span class="precio-naranja">S/ 27.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Piqueo carretillero</strong> —
-            <span class="precio-naranja">S/ 28.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Chorizo a la parrilla</strong> —
-            <span class="precio-naranja">S/ 18.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Brochetas de pollo</strong> —
-            <span class="precio-naranja">S/ 24.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Mollejitas a la parrilla</strong> —
-            <span class="precio-naranja">S/ 22.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Salchipapa</strong> —
-            <span class="precio-naranja">S/ 15.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Churrasco a la parrilla</strong> —
-            <span class="precio-naranja">S/ 24.00</span>
-          </li>
-          <li>
-            <strong style="color: #000"
-              >Churrasco con tallarín verde y papa a la huancaína</strong
-            >
-            — <span class="precio-naranja">S/ 26.00</span>
-          </li>
-          <li>
-            <strong style="color: #000"
-              >Chuleta con tallarín verde y papa a la huancaína</strong
-            >
-            — <span class="precio-naranja">S/ 26.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Chuleta de cerdo</strong> —
-            <span class="precio-naranja">S/ 25.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Anticucho de corazón</strong> —
-            <span class="precio-naranja">S/ 26.00</span>
-          </li>
-          <li>
-            <strong style="color: #000"
-              >Panceta de cerdo a la leña con papas fritas</strong
-            >
-            — <span class="precio-naranja">S/ 28.00</span>
-          </li>
-          <li>
-            <strong style="color: #000"
-              >Tallarín verde con pechuga a la parrilla</strong
-            >
-            — <span class="precio-naranja">S/ 25.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Tallarín verde + 1/4 de pollo</strong> —
-            <span class="precio-naranja">S/ 26.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Tallarín verde con chuleta</strong> —
-            <span class="precio-naranja">S/ 26.00</span>
-          </li>
-          <li>
-            <strong style="color: #000"
-              >Papas fritas / sancochadas + choclo</strong
-            >
-            — <span class="precio-naranja">S/ 6.00</span>
-          </li>
-        </ul>
-      </section>
+        <article class="card" data-cat="pollos" data-name="1 Pollo + Tequeños" data-price="74">
+          <img src="imagenes/pollo-tequenos.jpg" alt="1 Pollo + Tequeños" loading="lazy" />
+          <div class="card-body">
+            <h4>1 Pollo + Tequeños</h4>
+            <p>Incluye papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 74.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; align-items: flex-start;">
+        <article class="card" data-cat="pollos" data-name="1 Pollo + Chaufa de Pollo" data-price="72">
+          <img src="imagenes/pollo-chaufa.jpg" alt="1 Pollo + Chaufa de Pollo" loading="lazy" />
+          <div class="card-body">
+            <h4>1 Pollo + Chaufa de Pollo</h4>
+            <p>Incluye papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 72.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-</div>
-<section id="criollos">
-        <h2>Platos Criollos</h2>
-        <ul>
-          <li>
-            <strong style="color: #000">Saltado de pollo</strong> —
-            <span class="precio-naranja">S/ 22.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Tallarín saltado</strong> —
-            <span class="precio-naranja">S/ 22.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Lomo saltado</strong> —
-            <span class="precio-naranja">S/ 26.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Tallarín saltado con carne</strong> —
-            <span class="precio-naranja">S/ 26.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Lomo a lo pobre</strong> —
-            <span class="precio-naranja">S/ 28.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Lomo al jugo</strong> —
-            <span class="precio-naranja">S/ 22.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Chicharrón de pollo</strong> —
-            <span class="precio-naranja">S/ 23.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Tacu tacu con lomo</strong> —
-            <span class="precio-naranja">S/ 30.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Tipakay</strong> —
-            <span class="precio-naranja">S/ 20.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Lomonkay</strong> —
-            <span class="precio-naranja">S/ 19.00</span>
-          </li>
-  </div>
-</div>
-        </ul>
-</div>
- </section>
-      <section id="alitas">
-        <h2 style="color: #e60000">🍗 Alitas</h2>
-        <ul>
-          <li>
-            <strong style="color: #000">ALITAS BBQ (6 PIEZAS)</strong> —
-            <span class="precio-naranja">S/ 22.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">ALITAS BBQ(12 piezas)</strong> —
-            <span class="precio-naranja">S/ 40.00</span>
-          </li>
-        <p style="color: #333; font-weight: normal; margin-left: 1.5em;">
-  SABROSAS ALITAS CROCANTES BAÑADAS EN SALSA BBQ + ABUNDANTE PAPAS AMARILLAS + ENSALADA MIXTA
-</p>
+        <article class="card" data-cat="pollos" data-name="1 Pollo + Bebida 1.5 LT" data-price="72">
+          <img src="imagenes/pollo+gaseosa.jpg" alt="1 Pollo + Bebida 1.5 LT" loading="lazy" />
+          <div class="card-body">
+            <h4>1 Pollo + Bebida 1.5 LT</h4>
+            <p>Incluye papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 72.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-          <li>
-            <strong style="color: #000">ALITAS ACEVICHADAS (6 PIEZAS)</strong> —
-            <span class="precio-naranja">S/ 22.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">ALITAS ACEVICHADAS (12 PIEZAS)</strong> —
-            <span class="precio-naranja">S/ 40.00</span>
-          </li>
-          <p style="color: #333; font-weight: normal; margin-left: 1.5em;">
-  SABROSAS ALITAS CROCANTES BAÑADAS EN SALSA BBQ + ABUNDANTE PAPAS AMARILLAS + ENSALADA MIXTA
-</p>
-        <ul>
-      </section> 
-      <section id="guarniciones">
-         <h2 style="color: #e60000">🍟 Guarniciones</h2>
-        <ul>
-           <li>
-            <strong style="color: #000">ARROZ BLANCO</strong> —
-            <span class="precio-naranja">S/ 6.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">ARROZ CHAUFA</strong> —
-            <span class="precio-naranja">S/ 8.00</span>
-          </li>
-          <li>
-           <strong style="color: #000">TALLARIN VERDE</strong> —
-           <span class="precio-naranja">S/ 14.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">TEQUEÑOS CON QUESO MOZZARELLA</strong> —
-            <span class="precio-naranja">S/ 15.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">TEQUEÑOS DE POLLO A LA BRASA</strong> —
-            <span class="precio-naranja">S/ 15.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">PORCIÒN DE PURE DE PAPAS </strong> —
-            <span class="precio-naranja">S/ 18.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">WANTAN FRITO </strong> —
-            <span class="precio-naranja">S/ 15.00</span>
-          </li>
-          <li>
-  <strong style="color: red; font-size: 20px;">PAPAS AMARILLAS FRITAS:</strong><br>
-  <span style="display: block; margin-left: 15px;">
-    <strong style="color: #000;">Porción mediana</strong> — 
-    <span class="precio-naranja">S/ 15.00</span><br>
-    Papas nativas crocantes, ideales para acompañar cualquier plato.
-  </span>
-  <span style="display: block; margin-left: 15px; margin-top: 6px;">
-    <strong style="color: #000;">Porción grande</strong> — 
-    <span class="precio-naranja">S/ 18.00</span><br>
-    Porción generosa de papas amarillas peruanas doradas al punto.
-  </span>
-</li>
+        <article class="card" data-cat="pollos" data-name="1 Pollo a la Leña" data-price="67">
+          <img src="imagenes/pollo-lena.jpg" alt="1 Pollo a la Leña" loading="lazy" />
+          <div class="card-body">
+            <h4>1 Pollo a la Leña</h4>
+            <p>Con papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 67.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-</li>
+        <article class="card" data-cat="pollos" data-name="1 Pollo + 1/4 Pollo a la Leña" data-price="72">
+          <img src="imagenes/pollo-cuarto.jpg" alt="1 Pollo + 1/4 Pollo a la Leña" loading="lazy" />
+          <div class="card-body">
+            <h4>1 Pollo + chaufa de pollo </h4>
+            <p>Incluye papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 72.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-        </ul>
-</section>
-      <section id="arroces">
-        <h2>Chaufas y Aeropuerto</h2>
-        <ul>
-          <li>
-            <strong style="color: #000">Chaufa de pollo</strong> —
-            <span class="precio-naranja">S/ 15.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Chaufa de carne</strong> —
-            <span class="precio-naranja">S/ 19.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Chaufa de cerdo ahumado</strong> —
-            <span class="precio-naranja">S/ 23.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Arroz salvaje de pollo</strong> —
-            <span class="precio-naranja">S/ 29.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Combinado</strong> —
-            <span class="precio-naranja">S/ 23.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Aeropuerto de pollo</strong> —
-            <span class="precio-naranja">S/ 16.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Aeropuerto de cerdo ahumado</strong> —
-            <span class="precio-naranja">S/ 23.00</span>
-          </li>
-        </ul>
-      </section>
+        <article class="card" data-cat="pollos" data-name="1 Pollo + 1/4 Pollo a la Leña + Gaseosa 1.5 LT" data-price="79">
+          <img src="imagenes/pollo-cuarto-gaseosa.jpg" alt="1 Pollo + 1/4 Pollo a la Leña + Gaseosa 1.5 LT" loading="lazy" />
+          <div class="card-body">
+            <h4>1 Pollo + 1/4 Pollo a la Leña + Gaseosa 1.5 LT</h4>
+            <p>Incluye papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 79.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-      <section id="sopas">
-        <h2>Sopas</h2>
-        <ul>
-          <li>
-            <strong style="color: #000">Sopa Wantàn</strong> —
-            <span class="precio-naranja">S/ 15.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Sopa Minuta</strong> —
-            <span class="precio-naranja">S/ 15.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Sopa Sustancia</strong> —
-            <span class="precio-naranja">S/ 15.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Sopa Dieta</strong> —
-            <span class="precio-naranja">S/ 15.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Caldo de gallina completo</strong> —
-            <span class="precio-naranja">S/ 12.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Caldo con huevo</strong> —
-            <span class="precio-naranja">S/ 8.00</span>
-          </li>
-        </ul>
-      </section>
+        <article class="card" data-cat="pollos" data-name="1 Pollo + 1/2 Pollo a la Leña" data-price="92">
+          <img src="imagenes/pollo-media.jpg" alt="1 Pollo + 1/2 Pollo a la Leña" loading="lazy" />
+          <div class="card-body">
+            <h4>1 Pollo + 1/2 Pollo a la Leña</h4>
+            <p>Incluye papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 92.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-      <section id="ensaladas">
-        <h2>Ensaladas</h2>
-        <ul>
-          <li>
-            <strong style="color: #000">Ensalda Fresca</strong> —
-            <span class="precio-naranja">S/ 12.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Ensalada Cocida</strong> —
-            <span class="precio-naranja">S/ 14.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Ensalada Malca’s</strong> —
-            <span class="precio-naranja">S/ 20.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Ensalada Fresca personal</strong> —
-            <span class="precio-naranja">S/ 8.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Ensalada Cocida personal</strong> —
-            <span class="precio-naranja">S/ 6.00</span>
-          </li>
-        </ul>
-      </section>
+        <article class="card" data-cat="pollos" data-name="1 Pollo + 1/2 Pollo a la Leña + 1.5 LT" data-price="98">
+          <img src="imagenes/pollo-media-gaseosa.jpg" alt="1 Pollo + 1/2 Pollo a la Leña + 1.5 LT" loading="lazy" />
+          <div class="card-body">
+            <h4>1 Pollo + 1/2 Pollo a la Leña + 1.5 LT</h4>
+            <p>Incluye papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 98.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-      <section id="bebidas">
-        <h2>Bebidas</h2>
-        <h3 style="color: #b71c1c">VINOS PERUANOS</h3>
-        <ul>
-          <li>
-            <strong style="color: #000">Tacama Rosé</strong> —
-            <span class="precio-naranja">S/ 45.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Tabernero Borgoña</strong> —
-            <span class="precio-naranja">S/ 35.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Tabernero Rosé</strong> —
-            <span class="precio-naranja">S/ 40.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Queirolo</strong> —
-            <span class="precio-naranja">S/ 35.00</span>
-          </li>
-        </ul>
-        <h3 style="color: #b71c1c">BEBIDAS NATURALES</h3>
-        <ul>
-          <li>
-            <strong style="color: #000"
-              >Chicha, limonada, maracuyá, aguaymanto, naranja 1L</strong
-            >
-            — <span class="precio-naranja">S/ 13.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">1.5L</strong> —
-            <span class="precio-naranja">S/ 17.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Vaso de chicha</strong> —
-            <span class="precio-naranja">S/ 5.00</span>
-          </li>
-        </ul>
-        <h3 style="color: #b71c1c">GASEOSAS Y CERVEZAS</h3>
-        <ul>
-          <li>
-            <strong style="color: #000">Gaseosa 500ml</strong> —
-            <span class="precio-naranja">S/ 5.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Gaseosa 1.5L</strong> —
-            <span class="precio-naranja">S/ 10.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Agua sin/con gas</strong> —
-            <span class="precio-naranja">S/ 3.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Pilsen</strong> —
-            <span class="precio-naranja">S/ 8.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Cusqueña / Negra</strong> —
-            <span class="precio-naranja">S/ 9.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Corona</strong> —
-            <span class="precio-naranja">S/ 12.00</span>
-          </li>
-        </ul>
-        <h3 style="color: #b71c1c">BEBIDAS CALIENTES</h3>
-        <ul>
-          <li>
-            <strong style="color: #000">Café</strong> —
-            <span class="precio-naranja">S/ 3.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Té</strong> —
-            <span class="precio-naranja">S/ 3.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Manzanilla</strong> —
-            <span class="precio-naranja">S/ 3.00</span>
-          </li>
-          <li>
-            <strong style="color: #000">Anís</strong> —
-            <span class="precio-naranja">S/ 3.00</span>
-          </li>
-        </ul>
-      </section>
+        <article class="card" data-cat="pollos" data-name="2 Pollos a la Leña + 2 Gaseosas 1.5 LT" data-price="135">
+          <img src="imagenes/2pollos.jpg" alt="2 Pollos a la Leña + 2 Gaseosas 1.5 LT" loading="lazy" />
+          <div class="card-body">
+            <h4>2 Pollos a la Leña + 2 Gaseosas 1.5 LT</h4>
+            <p>Incluye papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 135.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-      <section id="contacto">
-        <h2>📞 Contáctanos</h2>
+        <article class="card" data-cat="pollos" data-name="1/4 Pollo a la Leña" data-price="18">
+          <!-- Renombra archivo con espacios/acento. Ej: 'pollo-cuarto-lena.jpg' -->
+          <img src="imagenes/pollo a la leña.jpg" alt="1/4 Pollo a la Leña" loading="lazy" />
+          <div class="card-body">
+            <h4>1/4 Pollo a la Leña</h4>
+            <p>Con papas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 18.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
 
-        <div class="contacto-info">
+        <article class="card" data-cat="pollos" data-name="1/2 Pollo a la Leña" data-price="35">
+          <!-- Renombra archivo con espacios/acento. Ej: 'medio-pollo-lena.jpg' -->
+          <img src="imagenes/medio pollo a la leña.jpg" alt="1/2 Pollo a la Leña" loading="lazy" />
+          <div class="card-body">
+            <h4>1/2 Pollo a la Leña</h4>
+            <p>Papas + ensalada + cremas.</p>
+            <div class="price-actions"><span class="price">S/ 35.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="pollos" data-name="Combo Malca's Extremo" data-price="50">
+          <img src="imagenes/combo-extremo.jpg" alt="Combo Malca's Extremo" loading="lazy" />
+          <div class="card-body">
+            <h4>Combo Malca's Extremo</h4>
+            <p>1/2 pollo + chaufa + papas + 500ml + ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 50.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="pollos" data-name="Combo Malca's" data-price="28">
+          <img src="imagenes/combo-malcas.jpg" alt="Combo Malca's" loading="lazy" />
+          <div class="card-body">
+            <h4>Combo Malca's</h4>
+            <p>1/4 pollo + anticucho + chorizo + papas + ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 28.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Parrillas ====== -->
+        <article class="card" data-cat="parrillas" data-name="Parrilla para Dos" data-price="85">
+          <img src="imagenes/parrilla-dos.jpg" alt="Parrilla para Dos" loading="lazy" />
+          <div class="card-body">
+            <h4>Parrilla para Dos</h4>
+            <p>Churrasco, chuleta, chorizo, anticucho, mollejita, 1/4 pollo, papas fritas y ensalada.</p>
+            <div class="price-actions"><span class="price">S/ 85.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Parrilla Familiar" data-price="115">
+          <img src="imagenes/parrilla-familiar.jpg" alt="Parrilla Familiar" loading="lazy" />
+          <div class="card-body">
+            <h4>Parrilla Familiar</h4>
+            <p>Churrasco, chuleta, anticucho, chorizos, mollejitas, 1/2 pollo, papas, ensalada y gaseosa 1.5L.</p>
+            <div class="price-actions"><span class="price">S/ 115.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Pechuga de Pollo a la Parrilla" data-price="25">
+          <img src="imagenes/pechuga-parrilla.jpg" alt="Pechuga de pollo a la parrilla" loading="lazy" />
+          <div class="card-body">
+            <h4>Pechuga de Pollo a la Parrilla</h4>
+            <p>Jugosa pechuga de pollo a la parrilla.</p>
+            <div class="price-actions"><span class="price">S/ 25.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Pechuga Rellena" data-price="25">
+          <img src="imagenes/pechuga-rellena.jpg" alt="Pechuga rellena (tocino y queso mozzarella)" loading="lazy" />
+          <div class="card-body">
+            <h4>Pechuga Rellena</h4>
+            <p>Con tocino y queso mozzarella.</p>
+            <div class="price-actions"><span class="price">S/ 25.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Bife a la Parrilla" data-price="27">
+          <img src="imagenes/bife-parrilla.jpg" alt="Bife a la parrilla" loading="lazy" />
+          <div class="card-body">
+            <h4>Bife a la Parrilla</h4>
+            <p>Corte jugoso a la parrilla.</p>
+            <div class="price-actions"><span class="price">S/ 27.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Piqueo Carretillero" data-price="28">
+          <img src="imagenes/piqueo-carretillero.jpg" alt="Piqueo carretillero" loading="lazy" />
+          <div class="card-body">
+            <h4>Piqueo Carretillero</h4>
+            <p>Mix de sabores parrilleros.</p>
+            <div class="price-actions"><span class="price">S/ 28.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Chorizo a la Parrilla" data-price="18">
+          <img src="imagenes/chorizo-parrilla.jpg" alt="Chorizo a la parrilla" loading="lazy" />
+          <div class="card-body">
+            <h4>Chorizo a la Parrilla</h4>
+            <p>Chorizo jugoso y bien asado.</p>
+            <div class="price-actions"><span class="price">S/ 18.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Brochetas de Pollo" data-price="24">
+          <img src="imagenes/brochetas-pollo.jpg" alt="Brochetas de pollo" loading="lazy" />
+          <div class="card-body">
+            <h4>Brochetas de Pollo</h4>
+            <p>Brochetas a la parrilla con verduras.</p>
+            <div class="price-actions"><span class="price">S/ 24.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Mollejitas a la Parrilla" data-price="22">
+          <img src="imagenes/mollejitas-parrilla.jpg" alt="Mollejitas a la parrilla" loading="lazy" />
+          <div class="card-body">
+            <h4>Mollejitas a la Parrilla</h4>
+            <p>Suaves y jugosas mollejitas.</p>
+            <div class="price-actions"><span class="price">S/ 22.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Salchipapa" data-price="15">
+          <img src="imagenes/salchipapa.jpg" alt="Salchipapa" loading="lazy" />
+          <div class="card-body">
+            <h4>Salchipapa</h4>
+            <p>Papas fritas con salchichas.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Churrasco a la Parrilla" data-price="24">
+          <img src="imagenes/churrasco-parrilla.jpg" alt="Churrasco a la parrilla" loading="lazy" />
+          <div class="card-body">
+            <h4>Churrasco a la Parrilla</h4>
+            <p>Clásico corte a la parrilla.</p>
+            <div class="price-actions"><span class="price">S/ 24.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Churrasco con Tallarín Verde" data-price="26">
+          <img src="imagenes/churrasco-tallarin.jpg" alt="Churrasco con tallarín verde y papa a la huancaína" loading="lazy" />
+          <div class="card-body">
+            <h4>Churrasco con Tallarín Verde</h4>
+            <p>Con papa a la huancaína.</p>
+            <div class="price-actions"><span class="price">S/ 26.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Chuleta con Tallarín Verde" data-price="26">
+          <img src="imagenes/chuleta-tallarin.jpg" alt="Chuleta con tallarín verde y papa a la huancaína" loading="lazy" />
+          <div class="card-body">
+            <h4>Chuleta con Tallarín Verde</h4>
+            <p>Con papa a la huancaína.</p>
+            <div class="price-actions"><span class="price">S/ 26.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Chuleta de Cerdo" data-price="25">
+          <img src="imagenes/chuleta-cerdo.jpg" alt="Chuleta de cerdo" loading="lazy" />
+          <div class="card-body">
+            <h4>Chuleta de Cerdo</h4>
+            <p>Jugosa chuleta de cerdo.</p>
+            <div class="price-actions"><span class="price">S/ 25.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Anticucho de Corazón" data-price="26">
+          <img src="imagenes/anticucho-corazon.jpg" alt="Anticucho de corazón" loading="lazy" />
+          <div class="card-body">
+            <h4>Anticucho de Corazón</h4>
+            <p>Clásico sabor criollo.</p>
+            <div class="price-actions"><span class="price">S/ 26.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Panceta de Cerdo a la Leña" data-price="28">
+          <img src="imagenes/panceta-cerdo.jpg" alt="Panceta de cerdo a la leña con papas fritas" loading="lazy" />
+          <div class="card-body">
+            <h4>Panceta de Cerdo a la Leña</h4>
+            <p>Con papas fritas.</p>
+            <div class="price-actions"><span class="price">S/ 28.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Tallarín Verde con Pechuga" data-price="25">
+          <img src="imagenes/tallarin-pechuga.jpg" alt="Tallarín verde con pechuga a la parrilla" loading="lazy" />
+          <div class="card-body">
+            <h4>Tallarín Verde con Pechuga</h4>
+            <p>A la parrilla.</p>
+            <div class="price-actions"><span class="price">S/ 25.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="parrillas" data-name="Tallarín Verde + 1/4 de Pollo" data-price="26">
+          <img src="imagenes/tallarin-cuarto-pollo.jpg" alt="Tallarín verde + 1/4 de pollo" loading="lazy" />
+          <div class="card-body">
+            <h4>Tallarín Verde + 1/4 de Pollo</h4>
+            <p>Pollo a la leña.</p>
+            <div class="price-actions"><span class="price">S/ 26.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Platos Criollos ====== -->
+        <article class="card" data-cat="criollos" data-name="Saltado de Pollo" data-price="22">
+          <img src="imagenes/saltado de pollo.jpg" alt="Saltado de Pollo" loading="lazy" />
+          <div class="card-body">
+            <h4>Saltado de Pollo</h4>
+            <p>Clásico saltado con pollo y verduras frescas.</p>
+            <div class="price-actions"><span class="price">S/ 22.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="criollos" data-name="Tallarín Saltado" data-price="22">
+          <img src="imagenes/tallarin-saltado.jpg" alt="Tallarín Saltado" loading="lazy" />
+          <div class="card-body">
+            <h4>Tallarín Saltado</h4>
+            <p>Fideos salteados al estilo criollo.</p>
+            <div class="price-actions"><span class="price">S/ 22.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="criollos" data-name="Lomo Saltado" data-price="26">
+          <img src="imagenes/lomo saltado.jpg" alt="Lomo Saltado" loading="lazy" />
+          <div class="card-body">
+            <h4>Lomo Saltado</h4>
+            <p>Clásico peruano con carne de res y papas fritas.</p>
+            <div class="price-actions"><span class="price">S/ 26.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="criollos" data-name="Tallarín Saltado con Carne" data-price="26">
+          <img src="imagenes/tallarin saltado con carne.jpg" alt="Tallarín Saltado con Carne" loading="lazy" />
+          <div class="card-body">
+            <h4>Tallarín Saltado con Carne</h4>
+            <p>Fideos salteados con jugosa carne de res.</p>
+            <div class="price-actions"><span class="price">S/ 26.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="criollos" data-name="Lomo a lo Pobre" data-price="28">
+          <img src="imagenes/lomo-pobre.jpg" alt="Lomo a lo Pobre" loading="lazy" />
+          <div class="card-body">
+            <h4>Lomo a lo Pobre</h4>
+            <p>Con plátano frito, arroz, huevo y papas fritas.</p>
+            <div class="price-actions"><span class="price">S/ 28.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="criollos" data-name="Lomo al Jugo" data-price="22">
+          <img src="imagenes/lomo-jugo.jpg" alt="Lomo al Jugo" loading="lazy" />
+          <div class="card-body">
+            <h4>Lomo al Jugo</h4>
+            <p>Carne de res en jugo, acompañado de arroz.</p>
+            <div class="price-actions"><span class="price">S/ 22.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="criollos" data-name="Chicharrón de Pollo" data-price="23">
+          <img src="imagenes/chicharron-pollo.jpg" alt="Chicharrón de Pollo" loading="lazy" />
+          <div class="card-body">
+            <h4>Chicharrón de Pollo</h4>
+            <p>Trozos de pollo frito, crujiente y jugoso.</p>
+            <div class="price-actions"><span class="price">S/ 23.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="criollos" data-name="Tacu Tacu con Lomo" data-price="30">
+          <img src="imagenes/tacu-lomo.jpg" alt="Tacu Tacu con Lomo" loading="lazy" />
+          <div class="card-body">
+            <h4>Tacu Tacu con Lomo</h4>
+            <p>Tacu tacu acompañado de lomo saltado.</p>
+            <div class="price-actions"><span class="price">S/ 30.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="criollos" data-name="Tipakay" data-price="20">
+          <img src="imagenes/tipakay.jpg" alt="Tipakay" loading="lazy" />
+          <div class="card-body">
+            <h4>Tipakay</h4>
+            <p>Pollo frito con salsa agridulce.</p>
+            <div class="price-actions"><span class="price">S/ 20.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="criollos" data-name="Lomonkay" data-price="19">
+          <img src="imagenes/lomonkay.jpg" alt="Lomonkay" loading="lazy" />
+          <div class="card-body">
+            <h4>Lomonkay</h4>
+            <p>Lomo salteado en salsa agridulce.</p>
+            <div class="price-actions"><span class="price">S/ 19.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Alitas ====== -->
+        <article class="card" data-cat="alitas" data-name="Alitas BBQ (6 piezas)" data-price="22">
+          <img src="imagenes/alitas-bbq6.jpg" alt="Alitas BBQ (6 piezas)" loading="lazy" />
+          <div class="card-body">
+            <h4>Alitas BBQ (6 piezas)</h4>
+            <p>Alitas crocantes en salsa BBQ + papas amarillas + ensalada mixta.</p>
+            <div class="price-actions"><span class="price">S/ 22.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="alitas" data-name="Alitas BBQ (12 piezas)" data-price="40">
+          <img src="imagenes/alitas-bbq12.jpg" alt="Alitas BBQ (12 piezas)" loading="lazy" />
+          <div class="card-body">
+            <h4>Alitas BBQ (12 piezas)</h4>
+            <p>Alitas crocantes en salsa BBQ + papas amarillas + ensalada mixta.</p>
+            <div class="price-actions"><span class="price">S/ 40.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="alitas" data-name="Alitas Acevichadas (6 piezas)" data-price="22">
+          <img src="imagenes/alitas-acevichadas6.jpg" alt="Alitas Acevichadas (6 piezas)" loading="lazy" />
+          <div class="card-body">
+            <h4>Alitas Acevichadas (6 piezas)</h4>
+            <p>Alitas crocantes en salsa acevichada + papas amarillas + ensalada mixta.</p>
+            <div class="price-actions"><span class="price">S/ 22.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="alitas" data-name="Alitas Acevichadas (12 piezas)" data-price="40">
+          <img src="imagenes/alitas-acevichadas12.jpg" alt="Alitas Acevichadas (12 piezas)" loading="lazy" />
+          <div class="card-body">
+            <h4>Alitas Acevichadas (12 piezas)</h4>
+            <p>Alitas crocantes en salsa acevichada + papas amarillas + ensalada mixta.</p>
+            <div class="price-actions"><span class="price">S/ 40.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Guarniciones ====== -->
+        <article class="card" data-cat="guarniciones" data-name="Arroz Blanco" data-price="6">
+          <img src="imagenes/arroz-blanco.jpg" alt="Arroz Blanco" loading="lazy" />
+          <div class="card-body">
+            <h4>Arroz Blanco</h4>
+            <p>Porción de arroz blanco suave y esponjoso.</p>
+            <div class="price-actions"><span class="price">S/ 6.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="guarniciones" data-name="Arroz Chaufa" data-price="8">
+          <img src="imagenes/arroz-chaufa.jpg" alt="Arroz Chaufa" loading="lazy" />
+          <div class="card-body">
+            <h4>Arroz Chaufa</h4>
+            <p>Porción de chaufa estilo chifa, bien sabroso.</p>
+            <div class="price-actions"><span class="price">S/ 8.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="guarniciones" data-name="Tallarín Verde" data-price="14">
+          <img src="imagenes/tallarin-verde.jpg" alt="Tallarín Verde" loading="lazy" />
+          <div class="card-body">
+            <h4>Tallarín Verde</h4>
+            <p>Al pesto peruano, cremoso y sabroso.</p>
+            <div class="price-actions"><span class="price">S/ 14.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="guarniciones" data-name="Tequeños con Queso Mozzarella" data-price="15">
+          <img src="imagenes/tequenos-queso.jpg" alt="Tequeños con queso mozzarella" loading="lazy" />
+          <div class="card-body">
+            <h4>Tequeños con Queso Mozzarella</h4>
+            <p>Crocantes y llenos de queso.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="guarniciones" data-name="Tequeños de Pollo a la Brasa" data-price="15">
+          <img src="imagenes/tequenos-pollo.jpg" alt="Tequeños de pollo a la brasa" loading="lazy" />
+          <div class="card-body">
+            <h4>Tequeños de Pollo a la Brasa</h4>
+            <p>Rellenos con pollo a la brasa deshilachado.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="guarniciones" data-name="Porción de Puré de Papas" data-price="18">
+          <img src="imagenes/pure-papas.jpg" alt="Puré de papas" loading="lazy" />
+          <div class="card-body">
+            <h4>Porción de Puré de Papas</h4>
+            <p>Cremoso, casero y bien sazonado.</p>
+            <div class="price-actions"><span class="price">S/ 18.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="guarniciones" data-name="Wantán Frito" data-price="15">
+          <img src="imagenes/wantan-frito.jpg" alt="Wantán frito" loading="lazy" />
+          <div class="card-body">
+            <h4>Wantán Frito</h4>
+            <p>Porción crocante para piqueo o acompañar.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- Papas Amarillas: mediana -->
+        <article class="card" data-cat="guarniciones" data-name="Papas Amarillas Fritas (Mediana)" data-price="15">
+          <img src="imagenes/papas-amarillas-mediana.jpg" alt="Papas amarillas fritas mediana" loading="lazy" />
+          <div class="card-body">
+            <h4>Papas Amarillas Fritas — Porción Mediana</h4>
+            <p>Papas nativas crocantes, ideales para acompañar cualquier plato.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- Papas Amarillas: grande -->
+        <article class="card" data-cat="guarniciones" data-name="Papas Amarillas Fritas (Grande)" data-price="18">
+          <img src="imagenes/papas-amarillas-grande.jpg" alt="Papas amarillas fritas grande" loading="lazy" />
+          <div class="card-body">
+            <h4>Papas Amarillas Fritas — Porción Grande</h4>
+            <p>Porción generosa de papas amarillas peruanas doradas al punto.</p>
+            <div class="price-actions"><span class="price">S/ 18.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Chaufas y Aeropuerto ====== -->
+        <article class="card" data-cat="chaufas" data-name="Chaufa de Pollo" data-price="15">
+          <img src="imagenes/chaufa-pollo.jpg" alt="Chaufa de Pollo" loading="lazy" />
+          <div class="card-body">
+            <h4>Chaufa de Pollo</h4>
+            <p>Clásico chaufa con pollo, cebolla china y sillao.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="chaufas" data-name="Chaufa de Carne" data-price="19">
+          <img src="imagenes/chaufa-carne.jpg" alt="Chaufa de Carne" loading="lazy" />
+          <div class="card-body">
+            <h4>Chaufa de Carne</h4>
+            <p>Arroz salteado con lomo, estilo chifa.</p>
+            <div class="price-actions"><span class="price">S/ 19.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="chaufas" data-name="Chaufa de Cerdo Ahumado" data-price="23">
+          <img src="imagenes/chaufa-cerdo.jpg" alt="Chaufa de cerdo ahumado" loading="lazy" />
+          <div class="card-body">
+            <h4>Chaufa de Cerdo Ahumado</h4>
+            <p>Con cerdo ahumado y toque wok.</p>
+            <div class="price-actions"><span class="price">S/ 23.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="chaufas" data-name="Arroz Salvaje de Pollo" data-price="29">
+          <img src="imagenes/arroz-salvaje-pollo.jpg" alt="Arroz salvaje de pollo" loading="lazy" />
+          <div class="card-body">
+            <h4>Arroz Salvaje de Pollo</h4>
+            <p>Arroz norteño salteado con pollo y verduras.</p>
+            <div class="price-actions"><span class="price">S/ 29.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="chaufas" data-name="Combinado" data-price="23">
+          <img src="imagenes/combinado.jpg" alt="Combinado" loading="lazy" />
+          <div class="card-body">
+            <h4>Combinado</h4>
+            <p>Arroz chaufa + tallarín saltado (mitad y mitad).</p>
+            <div class="price-actions"><span class="price">S/ 23.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="chaufas" data-name="Aeropuerto de Pollo" data-price="16">
+          <img src="imagenes/aeropuerto-pollo.jpg" alt="Aeropuerto de pollo" loading="lazy" />
+          <div class="card-body">
+            <h4>Aeropuerto de Pollo</h4>
+            <p>Chaufa con tallarín crocante y pollo.</p>
+            <div class="price-actions"><span class="price">S/ 16.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="chaufas" data-name="Aeropuerto de Cerdo Ahumado" data-price="23">
+          <img src="imagenes/aeropuerto-cerdo.jpg" alt="Aeropuerto de cerdo ahumado" loading="lazy" />
+          <div class="card-body">
+            <h4>Aeropuerto de Cerdo Ahumado</h4>
+            <p>Chaufa con tallarín crocante y cerdo ahumado.</p>
+            <div class="price-actions"><span class="price">S/ 23.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Sopas ====== -->
+        <article class="card" data-cat="sopas" data-name="Sopa Wantán" data-price="15">
+          <img src="imagenes/sopa-wantan.jpg" alt="Sopa wantán" loading="lazy" />
+          <div class="card-body">
+            <h4>Sopa Wantán</h4>
+            <p>Caldito con wantanes y verduras.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="sopas" data-name="Sopa Minuta" data-price="15">
+          <img src="imagenes/sopa-minuta.jpg" alt="Sopa minuta" loading="lazy" />
+          <div class="card-body">
+            <h4>Sopa Minuta</h4>
+            <p>Clásica, reconfortante y sustanciosa.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="sopas" data-name="Sopa Sustancia" data-price="15">
+          <img src="imagenes/sopa-sustancia.jpg" alt="Sopa sustancia" loading="lazy" />
+          <div class="card-body">
+            <h4>Sopa Sustancia</h4>
+            <p>Con trozos de pollo y fideos.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="sopas" data-name="Sopa Dieta" data-price="15">
+          <img src="imagenes/sopa-dieta.jpg" alt="Sopa dieta" loading="lazy" />
+          <div class="card-body">
+            <h4>Sopa Dieta</h4>
+            <p>Ligera y sabrosa para el antojo.</p>
+            <div class="price-actions"><span class="price">S/ 15.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="sopas" data-name="Caldo de Gallina Completo" data-price="12">
+          <img src="imagenes/caldo-gallina.jpg" alt="Caldo de gallina completo" loading="lazy" />
+          <div class="card-body">
+            <h4>Caldo de Gallina Completo</h4>
+            <p>Con presa, fideos, papa y huevo.</p>
+            <div class="price-actions"><span class="price">S/ 12.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="sopas" data-name="Caldo con Huevo" data-price="8">
+          <img src="imagenes/caldo-huevo.jpg" alt="Caldo con huevo" loading="lazy" />
+          <div class="card-body">
+            <h4>Caldo con Huevo</h4>
+            <p>Porción reconfortante con huevo.</p>
+            <div class="price-actions"><span class="price">S/ 8.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Ensaladas ====== -->
+        <article class="card" data-cat="ensaladas" data-name="Ensalada Fresca" data-price="12">
+          <img src="imagenes/ensalada-fresca.jpg" alt="Ensalada fresca" loading="lazy" />
+          <div class="card-body">
+            <h4>Ensalada Fresca</h4>
+            <p>Lechuga, tomate, pepino y vinagreta.</p>
+            <div class="price-actions"><span class="price">S/ 12.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="ensaladas" data-name="Ensalada Cocida" data-price="14">
+          <img src="imagenes/ensalada-cocida.jpg" alt="Ensalada cocida" loading="lazy" />
+          <div class="card-body">
+            <h4>Ensalada Cocida</h4>
+            <p>Verduras al vapor con sazón casera.</p>
+            <div class="price-actions"><span class="price">S/ 14.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="ensaladas" data-name="Ensalada Malca’s" data-price="20">
+          <img src="imagenes/ensalada-malcas.jpg" alt="Ensalada Malca’s" loading="lazy" />
+          <div class="card-body">
+            <h4>Ensalada Malca’s</h4>
+            <p>Mix especial de la casa.</p>
+            <div class="price-actions"><span class="price">S/ 20.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="ensaladas" data-name="Ensalada Fresca (Personal)" data-price="8">
+          <img src="imagenes/ensalada-fresca-personal.jpg" alt="Ensalada fresca personal" loading="lazy" />
+          <div class="card-body">
+            <h4>Ensalada Fresca (Personal)</h4>
+            <p>Porción individual.</p>
+            <div class="price-actions"><span class="price">S/ 8.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="ensaladas" data-name="Ensalada Cocida (Personal)" data-price="6">
+          <img src="imagenes/ensalada-cocida-personal.jpg" alt="Ensalada cocida personal" loading="lazy" />
+          <div class="card-body">
+            <h4>Ensalada Cocida (Personal)</h4>
+            <p>Porción individual.</p>
+            <div class="price-actions"><span class="price">S/ 6.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Bebidas (Vinos) ====== -->
+        <article class="card" data-cat="bebidas" data-name="Tacama Rosé" data-price="45">
+          <img src="imagenes/vino-tacama-rose.jpg" alt="Vino Tacama Rosé" loading="lazy" />
+          <div class="card-body">
+            <h4>Tacama Rosé</h4>
+            <p>Vino peruano.</p>
+            <div class="price-actions"><span class="price">S/ 45.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Tabernero Borgoña" data-price="35">
+          <img src="imagenes/vino-tabernero-borgona.jpg" alt="Vino Tabernero Borgoña" loading="lazy" />
+          <div class="card-body">
+            <h4>Tabernero Borgoña</h4>
+            <p>Vino peruano.</p>
+            <div class="price-actions"><span class="price">S/ 35.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Tabernero Rosé" data-price="40">
+          <img src="imagenes/vino-tabernero-rose.jpg" alt="Vino Tabernero Rosé" loading="lazy" />
+          <div class="card-body">
+            <h4>Tabernero Rosé</h4>
+            <p>Vino peruano.</p>
+            <div class="price-actions"><span class="price">S/ 40.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Queirolo" data-price="35">
+          <img src="imagenes/vino-queirolo.jpg" alt="Vino Queirolo" loading="lazy" />
+          <div class="card-body">
+            <h4>Queirolo</h4>
+            <p>Vino peruano.</p>
+            <div class="price-actions"><span class="price">S/ 35.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Bebidas Naturales ====== -->
+        <article class="card" data-cat="bebidas" data-name="Bebidas naturales 1L" data-price="13">
+          <img src="imagenes/jugos-1l.jpg" alt="Bebidas naturales 1L" loading="lazy" />
+          <div class="card-body">
+            <h4>Chicha/Limonada/Maracuyá/Aguaymanto/Naranja (1L)</h4>
+            <p>Bebida natural 1L.</p>
+            <div class="price-actions"><span class="price">S/ 13.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Bebidas naturales 1.5L" data-price="17">
+          <img src="imagenes/jugos-1_5l.jpg" alt="Bebidas naturales 1.5L" loading="lazy" />
+          <div class="card-body">
+            <h4>Chicha/Limonada/Maracuyá/Aguaymanto/Naranja (1.5L)</h4>
+            <p>Bebida natural 1.5L.</p>
+            <div class="price-actions"><span class="price">S/ 17.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Vaso de Chicha" data-price="5">
+          <img src="imagenes/vaso-chicha.jpg" alt="Vaso de chicha" loading="lazy" />
+          <div class="card-body">
+            <h4>Vaso de Chicha</h4>
+            <p>Chicha morada al vaso.</p>
+            <div class="price-actions"><span class="price">S/ 5.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Gaseosas y Cervezas ====== -->
+        <article class="card" data-cat="bebidas" data-name="Gaseosa 500ml" data-price="5">
+          <img src="imagenes/gaseosa-500.jpg" alt="Gaseosa 500ml" loading="lazy" />
+          <div class="card-body">
+            <h4>Gaseosa 500ml</h4>
+            <p>Botella personal.</p>
+            <div class="price-actions"><span class="price">S/ 5.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Gaseosa 1.5L" data-price="10">
+          <img src="imagenes/gaseosa-1_5.jpg" alt="Gaseosa 1.5L" loading="lazy" />
+          <div class="card-body">
+            <h4>Gaseosa 1.5L</h4>
+            <p>Ideal para compartir.</p>
+            <div class="price-actions"><span class="price">S/ 10.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Agua sin/con gas" data-price="3">
+          <img src="imagenes/agua.jpg" alt="Agua sin o con gas" loading="lazy" />
+          <div class="card-body">
+            <h4>Agua sin/con gas</h4>
+            <p>Botella individual.</p>
+            <div class="price-actions"><span class="price">S/ 3.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Pilsen" data-price="8">
+          <img src="imagenes/pilsen.jpg" alt="Cerveza Pilsen" loading="lazy" />
+          <div class="card-body">
+            <h4>Pilsen</h4>
+            <p>Cerveza 330–355 ml.</p>
+            <div class="price-actions"><span class="price">S/ 8.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Cusqueña / Negra" data-price="9">
+          <img src="imagenes/cusquena.jpg" alt="Cerveza Cusqueña o Negra" loading="lazy" />
+          <div class="card-body">
+            <h4>Cusqueña / Negra</h4>
+            <p>Cerveza 330–355 ml.</p>
+            <div class="price-actions"><span class="price">S/ 9.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Corona" data-price="12">
+          <img src="imagenes/corona.jpg" alt="Cerveza Corona" loading="lazy" />
+          <div class="card-body">
+            <h4>Corona</h4>
+            <p>Cerveza 330–355 ml.</p>
+            <div class="price-actions"><span class="price">S/ 12.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <!-- ====== Bebidas Calientes ====== -->
+        <article class="card" data-cat="bebidas" data-name="Café" data-price="3">
+          <img src="imagenes/cafe.jpg" alt="Café" loading="lazy" />
+          <div class="card-body">
+            <h4>Café</h4>
+            <p>Bebida caliente.</p>
+            <div class="price-actions"><span class="price">S/ 3.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Té" data-price="3">
+          <img src="imagenes/te.jpg" alt="Té" loading="lazy" />
+          <div class="card-body">
+            <h4>Té</h4>
+            <p>Bebida caliente.</p>
+            <div class="price-actions"><span class="price">S/ 3.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Manzanilla" data-price="3">
+          <img src="imagenes/manzanilla.jpg" alt="Manzanilla" loading="lazy" />
+          <div class="card-body">
+            <h4>Manzanilla</h4>
+            <p>Bebida caliente.</p>
+            <div class="price-actions"><span class="price">S/ 3.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="bebidas" data-name="Anís" data-price="3">
+          <img src="imagenes/anis.jpg" alt="Anís" loading="lazy" />
+          <div class="card-body">
+            <h4>Anís</h4>
+            <p>Bebida caliente.</p>
+            <div class="price-actions"><span class="price">S/ 3.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+      </div>
+      <!-- /#product-grid -->
+    </section>
+
+    <!-- Promos -->
+    <section id="promos" class="container">
+      <h2>Promociones 🎁</h2>
+      <div class="grid">
+        <article class="card" data-cat="promos" data-name="Promo de Hoy" data-price="32">
+          <img src="imagenes/promo-hoy.jpg" alt="Promo de Hoy" loading="lazy" />
+          <div class="card-body">
+            <h4>🎉 Promo de Hoy</h4>
+            <p>2 × 1/4 pollo + 2 chichas 500ml.</p>
+            <div class="price-actions"><span class="price">S/ 32.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="promos" data-name="Combo Familiar" data-price="79">
+          <img src="imagenes/combo-familiar.jpg" alt="Combo Familiar" loading="lazy" />
+          <div class="card-body">
+            <h4>🔥 Combo Familiar</h4>
+            <p>1 pollo entero + papas + ensalada + chaufa.</p>
+            <div class="price-actions"><span class="price">S/ 79.00</span><button class="btn add-btn">Agregar</button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  <!-- Contacto -->
+    <section
+      id="contacto"
+      class="contacto container"
+      aria-labelledby="contacto-title"
+    >
+      <div class="contacto-head">
+        <h3 id="contacto-title">📞 Haz tu pedido</h3>
+        <p class="contacto-sub">
+          Escríbenos por WhatsApp o arma tu pedido con el carrito.
+        </p>
+
+        <a
+          id="whatsapp-direct"
+          class="btn btn-whatsapp big contacto-cta"
+          target="_blank"
+          rel="noopener"
+        >
+          <img src="imagenes/whatsapp.jpg" alt="WhatsApp" class="wsp-icon" />
+          <span>Pedir por WhatsApp</span>
+        </a>
+
+        <p class="help">🕒 Atendemos de 12:00 pm a 10:30 pm</p>
+      </div>
+
+      <div class="contact-cards">
+        <article class="c-card">
+          <span class="c-icon" aria-hidden="true">📱</span>
+          <h5>Teléfono</h5>
           <p>
-            <strong> 📌 WhatsApp:</strong><br />
-            <a href="https://wa.me/51910006174" target="_blank">
-              Escríbenos por WhatsApp «Haz clic aquí»
-            </a>
+            <a class="link-cta" href="tel:+51910006174" title="Llamar ahora"
+              >910 006 174</a
+            >
           </p>
+        </article>
 
+        <article class="c-card">
+          <span class="c-icon" aria-hidden="true">🏠</span>
+          <h5>Dirección</h5>
+          <p>Ventanilla – Luis Felipe de las Casas, MZ P LT 01</p>
+        </article>
+
+        <article class="c-card">
+          <span class="c-icon" aria-hidden="true">🗺️</span>
+          <h5>Ubicación</h5>
           <p>
-            <strong> 📌 Dirección:</strong><br />
-            Ventanilla – Luis Felipe de las Casas, MZ P LT 01
-          </p>
-          <p>
-            <strong>📌 Ubicación exacta (Google Maps):</strong><br />
             <a
-              href="https://www.google.com/maps?q=5VG9%2B6P+Ventanilla"
+              class="link-cta"
               target="_blank"
+              href="https://maps.google.com/?q=5VG9+6P%20Ventanilla"
+              title="Abrir en Google Maps"
+              >5VG9+6P, Ventanilla</a
             >
-              5VG9+6P Ventanilla – Ver en Google Maps «Haz clic aquí»
-            </a>
           </p>
-          <p>
-            <strong>🌐 Redes Sociales:</strong><br />
-            Pollos y Parrillas Malca’s
-          </p>
-
-          <p>
-            <strong>🔗 Facebook:</strong><br />
-            <a href="https://www.facebook.com/pollosmalcas" target="_blank">
-              facebook.com/pollosmalcas «Haz clic aquí»
-            </a>
-          </p>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <p>© 2025 Pollería Malcas. Todos los derechos reservados.</p>
+        </article>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer-simple">
+        <p>
+          © <span id="year"></span> Pollería Malca's — Todos los derechos
+          reservados
+        </p>
+      </div>
     </footer>
 
-    <script>
-      function mostrarSeccion(id) {
-        const secciones = document.querySelectorAll("section");
-        secciones.forEach((sec) => sec.classList.remove("active"));
-        document.getElementById(id).classList.add("active");
-      }
-    </script>
+    <!-- Carrito (Drawer) -->
+    <aside id="cart" class="cart">
+      <div class="cart-head">
+        <h4>Tu pedido</h4>
+        <button id="closeCart" class="icon-btn" aria-label="Cerrar">✕</button>
+      </div>
+      <div id="cart-items" class="cart-items"></div>
+      <div class="cart-note">
+        <input id="cliente" placeholder="Tu nombre" />
+        <input id="direccion" placeholder="Dirección exacta" />
+        <input id="referencia" placeholder="Referencia (opcional)" />
+      </div>
+      <div class="cart-foot">
+        <div class="totals">
+          <span>Subtotal</span><strong id="subtotal">S/ 0.00</strong>
+        </div>
+         <div class="totals">
+          <span>Delivery</span><strong id="delivery">Gratis 😄</strong>
+        </div>
+        <div class="totals grand">
+          <span>Total</span><strong id="grand">S/ 6.00</strong>
+        </div>
+        <button id="sendWhatsApp" class="btn btn-primary">
+          Enviar pedido por WhatsApp
+        </button>
+      </div>
+    </aside>
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Botón flotante WhatsApp -->
+    <a
+      class="wsp-float"
+      id="wsp-float"
+      target="_blank"
+      rel="noopener"
+      aria-label="WhatsApp"
+      >💬</a
+    >
+
+    <script src="app.js"></script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
