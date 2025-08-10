@@ -1,288 +1,372 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
-
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #fff8f0;
-  color: #333;
+:root{
+  --bg:#fffdf9;
+  --text:#222;
+  --brand:#d62828;
+  --brand-2:#f77f00;
+  --muted:#777;
+  --card:#ffffff;
+  --line:#eee;
+  --success:#25d366;
 }
 
-header {
-  background-color: #b71c1c;
-  color: white;
-  padding: 20px;
-  text-align: center;
+/* ========== Base ========== */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
+  color:var(--text);
+  background:var(--bg);
+}
+.container{width:min(1100px,92%);margin:auto}
+
+/* ========== Topbar ========== */
+.topbar{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  color:#fff;font-size:.9rem
+}
+.topbar .container{
+  display:flex;gap:1rem;justify-content:space-between;padding:.5rem 0;flex-wrap:wrap
 }
 
-.encabezado {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
+/* ========== Header ========== */
+.header{
+  display:flex;align-items:center;justify-content:space-between;padding:1rem 0;
+  position:sticky;top:0;background:var(--bg);z-index:50;border-bottom:1px solid var(--line)
 }
+.brand{display:flex;align-items:center;gap:.8rem}
+.logo{width:54px;height:54px;object-fit:contain;border-radius:12px;border:2px solid var(--line);background:#fff}
+.header h1{font-size:1.25rem;margin:0}
+.header p{margin:.1rem 0 0;color:var(--muted);font-size:.9rem}
+.nav{display:flex;align-items:center;gap:1rem}
+.nav a{color:var(--text);text-decoration:none;font-weight:600}
+.btn{border:none;border-radius:10px;padding:.55rem .9rem;font-weight:700;cursor:pointer}
+.cart-btn{background:#111;color:#fff}
 
-.logo-encabezado {
-  height: 70px;
-  border-radius: 10px;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  background-color: #ffe0b2;
-  margin: 0;
-}
-
-nav ul li {
-  margin: 5px 15px;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: #4e342e;
-  font-weight: bold;
-  font-size: 1.2rem;
-  transition: color 0.3s;
-}
-
-nav ul li a:hover {
-  color: #b71c1c;
-}
-
-main {
-  padding: 20px;
-  max-width: 1000px;
-  margin: auto;
-  padding-bottom: 100px;
-}
-
-section {
-  display: none;
-}
-
-section.active {
-  display: block;
-}
-
-h2 {
-  color: #b71c1c;
-  text-align: center;
-  border-bottom: 3px solid #ffcc00;
-  padding-bottom: 10px;
-  font-size: 2rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: 800;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-}
-
-ul {
-  padding-left: 20px;
-  line-height: 1.8;
-}
-
-ul li {
-  font-size: 1.15rem;
-  color: #4e342e;
-  font-weight: 600;
-  padding: 8px 0;
-  border-bottom: 1px dashed #ddd;
-  transition: transform 0.2s ease-in-out;
-}
-
-ul li:hover {
-  transform: scale(1.02);
-  color: #b71c1c;
-}
-
-ul li strong {
-  color: #d84315;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.bienvenida {
-  font-size: 2.5rem;
-  text-align: center;
-  color: #b71c1c;
-  margin-bottom: 10px;
-  font-weight: 800;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.sub-bienvenida {
-  text-align: center;
-  font-size: 1.4rem;
-  color: #4e342e;
-  margin-bottom: 30px;
-  font-weight: bold;
-}
-
-.plato {
-  display: block;
-  max-width: 100%;
-  margin: 20px auto;
-  border-radius: 15px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-}
-
-footer {
-  background-color: #4e342e;
-  color: white;
-  text-align: center;
-  padding: 15px 0;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  font-size: 0.9rem;
-}
-
-.boton-pedido {
-  display: inline-block;
-  background-color: #ff5722;
-  color: white;
-  font-size: 1.2rem;
-  padding: 12px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  margin: 20px auto;
-  text-align: center;
-  transition: background 0.3s;
-}
-
-.boton-pedido:hover {
-  background-color: #e64a19;
-}
-
-a {
-  color: #b71c1c;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.contacto-info {
-  background-color: #fff3e0;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.8;
-  font-size: 1.1rem;
-  color: #4e342e;
-}
-
-.contacto-info a {
-  color: #b71c1c;
-  font-weight: bold;
-}
-
-.contacto-info a:hover {
-  text-decoration: underline;
-}
-
-.inicio-seccion {
-  text-align: center;
-  padding: 60px 20px;
-  background: url('img/fondo-pollo.jpg') no-repeat center center/cover;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  color: white;
-}
-
-.contenido-inicio {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 40px;
-  border-radius: 12px;
-  max-width: 700px;
-  margin: auto;
-}
-
-.resaltado {
-  color: #ffcc00;
-  font-weight: 900;
-}
-
-.frase-inicio {
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #4e342e;
-  background: linear-gradient(145deg, #fff8f0, #fbe9e7);
-  padding: 30px;
-  border-radius: 16px;
-  margin: 40px auto 20px;
-  max-width: 700px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+/* ========== Hero con vida y color ========== */
+.hero{
   position: relative;
-  font-style: italic;
-  line-height: 1.8;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 2.2rem 1.6rem;
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(1200px 500px at -10% 10%, rgba(255,122,0,.12) 0%, rgba(255,122,0,0) 60%),
+    radial-gradient(900px 400px at 120% 80%, rgba(230,57,70,.12) 0%, rgba(230,57,70,0) 60%),
+    #fff;
+  box-shadow: 0 20px 50px rgba(0,0,0,.06);
+}
+.hero::after{
+  content:"";
+  position: absolute; inset: -1px -1px -1px auto;
+  width: 44%;
+  background: linear-gradient(180deg, rgba(255,122,0,.16), rgba(230,57,70,.16));
+  filter: blur(40px);
+  z-index: -1;
+}
+.hero h2{
+  font-size: clamp(1.8rem, 3.2vw + .5rem, 2.6rem);
+  line-height: 1.15;
+  margin: 0 0 .6rem;
+}
+.hl{
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero-text p{color:#666;max-width:46ch;margin:0 0 1rem}
+.btn-primary{
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  border:none;color:#fff;padding:.85rem 1.2rem;border-radius:12px;font-weight:700;
+  box-shadow:0 10px 20px rgba(255,122,0,.25);
+  transition: transform .08s ease, box-shadow .25s ease, filter .25s ease;
+}
+.btn-primary:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+.hero-img{
+  width:100%;max-height:360px;object-fit:cover;border-radius:18px;
+  box-shadow:0 12px 30px rgba(0,0,0,.1);
 }
 
-.frase-inicio::before {
-  content: "“";
-  font-size: 3rem;
-  position: absolute;
-  top: -20px;
-  left: 25px;
-  color: #d84315;
-  font-family: Georgia, serif;
+/* ========== Sección menú: título, chips y buscador ========== */
+.section-head{
+  display:grid;gap:.9rem;align-items:start;margin:1.2rem 0;
+}
+.section-head h3{margin:0;font-size:1.25rem;font-weight:700}
+.filters{
+  display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;
+  overflow-x:auto;white-space:nowrap;scroll-snap-type:x mandatory;padding-bottom:.25rem;
+  -webkit-overflow-scrolling:touch;
+}
+.filters::-webkit-scrollbar{height:6px}
+.filters::-webkit-scrollbar-thumb{background:#e6e6e6;border-radius:999px}
+@media (min-width:900px){
+  .filters{justify-content:flex-start;overflow:visible;white-space:normal}
+}
+.chip{
+  appearance:none;border:1px solid #E9E9EC;background:#fff;color:#222;font-weight:600;
+  font-size:.92rem;padding:.55rem 1rem;border-radius:9999px;cursor:pointer;line-height:1;
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+  transition:transform .06s, box-shadow .2s, background .2s, color .2s, border-color .2s;
+  scroll-snap-align:start;
+}
+.chip:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(0,0,0,.08);border-color:#ddd}
+.chip.active{
+  border-color:transparent;color:#fff;
+  background:linear-gradient(90deg, var(--brand), var(--brand-2));
+  box-shadow:0 8px 18px rgba(255,122,0,.25);
+}
+.search{
+  flex:1;max-width:340px;border:1px solid var(--line);border-radius:10px;padding:.55rem .8rem;outline:none
 }
 
-.frase-inicio::after {
-  content: "”";
-  font-size: 3rem;
-  position: absolute;
-  bottom: -25px;
-  right: 25px;
-  color: #d84315;
-  font-family: Georgia, serif;
+/* ========== GRID de productos (uniforme para todas las categorías) ========== */
+#product-grid,
+.container .grid{ /* permite reutilizar .grid en otras secciones */
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  padding-bottom: 1rem;
 }
 
-.frase-inicio .clave {
-  color: #b71c1c;
-  font-weight: 900;
-  font-style: normal;
-  font-size: 1.6rem;
-  text-shadow: 1px 1px 2px #fce4ec;
+/* ========== Tarjeta de producto ========== */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(0,0,0,.10)}
+.card > img{
+  width:100%;
+  height:200px;          /* altura fija para alinear todas las tarjetas */
+  object-fit:cover;
+  display:block;
+}
+/* Si tienes una imagen que no debe recortarse, agrégale la clase "fit-all" */
+.card > img.fit-all{
+  object-fit:contain;background:#fff;padding:6px;
+}
+.card-body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-body h4{margin:0;color:var(--brand);font-size:1rem}
+.card-body p{margin:0;color:#666}
+.price-actions{margin-top:auto;display:flex;align-items:center;justify-content:space-between}
+.price{font-weight:700}
+.add-btn{background:#111;color:#fff;border:none;border-radius:10px;padding:8px 14px;font-weight:600;cursor:pointer}
+.add-btn:hover{filter:brightness(1.05)}
+
+/* ========== Promos (si usas cards también, se verán igual) ========== */
+.promos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:1rem 0 2rem}
+.promo{background:#fff;border:1px dashed var(--brand-2);padding:1rem;border-radius:14px}
+
+/* ========== Contacto bonito ========== */
+.contacto{
+  background:#fffaf3;
+  padding:2rem;
+  border-radius:18px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.05);
+  margin:2rem 0;
+}
+.contacto-info{text-align:center;margin-bottom:1.5rem}
+.contacto-info h3{font-size:1.5rem;color:var(--brand);margin-bottom:.5rem}
+.btn-whatsapp{background:var(--success);color:#fff}
+.btn-whatsapp.big{display:inline-flex;align-items:center;gap:.5rem;font-size:1.1rem;padding:.8rem 1.4rem}
+.wsp-icon{width:22px;height:22px}
+.contact-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.c-card{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:1rem;text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:transform .2s
+}
+.c-card:hover{transform:translateY(-3px)}
+.c-icon{font-size:1.5rem;display:block;margin-bottom:.3rem}
+.c-card h5{margin:.2rem 0;color:var(--brand-2)}
+.c-card p{margin:0}
+.c-card p a{color:var(--brand);font-weight:600;text-decoration:none}
+
+/* ========== Footer ========== */
+.footer{
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  margin-top: 2rem;
+}
+.footer-simple{text-align:center}
+.footer-simple p{color:#fff;font-weight:500;font-size:.95rem;margin:0;letter-spacing:.5px}
+
+/* ========== Carrito (drawer) ========== */
+.cart{
+  position:fixed;right:-420px;top:0;width:min(420px,92%);height:100vh;background:#fff;
+  box-shadow:-10px 0 30px rgba(0,0,0,.12);transition:all .35s ease;z-index:200;display:flex;flex-direction:column
+}
+.cart.open{right:0}
+.cart-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:1rem}
+.icon-btn{background:#eee;border:none;border-radius:10px;padding:.4rem .6rem;cursor:pointer}
+.cart-items{flex:1;overflow:auto;padding:1rem;display:flex;flex-direction:column;gap:.8rem}
+.ci{display:grid;grid-template-columns:56px 1fr auto;gap:.8rem;align-items:center;border:1px solid var(--line);border-radius:12px;padding:.5rem}
+.ci img{width:56px;height:56px;object-fit:cover;border-radius:10px}
+.ci h5{margin:0}
+.ci small{color:var(--muted)}
+.qty{display:flex;gap:.4rem;align-items:center}
+.qty button{padding:.2rem .5rem;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer}
+.cart-note{padding:0 1rem 1rem;display:grid;gap:.6rem}
+.cart-note input{border:1px solid var(--line);border-radius:10px;padding:.6rem}
+.cart-foot{border-top:1px solid var(--line);padding:1rem;display:grid;gap:.5rem}
+.totals{display:flex;align-items:center;justify-content:space-between}
+.grand{font-size:1.1rem}
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.3s;z-index:150
+}
+.overlay.show{opacity:1;pointer-events:auto}
+
+/* ========== WhatsApp flotante ========== */
+.wsp-float{
+  position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;
+  display:grid;place-items:center;background:var(--success);color:#fff;text-decoration:none;
+  font-size:1.4rem;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:180
 }
 
-.frase-inicio .firma {
-  display: block;
-  margin-top: 15px;
-  font-size: 1rem;
-  color: #6d4c41;
-  font-weight: bold;
-  font-style: normal;
-  letter-spacing: 1px;
-  font-family: 'Georgia', serif;
-  text-transform: uppercase;
+/* ========== Responsive ========== */
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;gap:1rem}
+  .hero-img{order:-1;max-height:260px}
 }
-.precio-naranja {
-  color: #ff5722;
-  font-weight: bold;
+@media (max-width:640px){
+  .nav{gap:.6rem}
 }
-.nombre-plato {
-  font-weight: 700;
-  color: #333;
+@media (prefers-reduced-motion: reduce){
+  .btn-primary{transition:none}
+}
+/* ====== MÓVIL FIRST TUNING ====== */
+
+/* 1) Tipografía y espaciados cómodos para dedo */
+body { line-height: 1.5; }
+.btn, .add-btn, .chip { min-height: 44px; }      /* tamaño táctil recomendado */
+.nav a, .btn, .chip { font-size: 0.95rem; }
+
+/* 2) Header compacto en pantallas chicas */
+@media (max-width: 640px){
+  .header{ padding:.6rem 0; gap:.6rem }
+  .brand{ gap:.6rem }
+  .header h1{ font-size:1.05rem }
+  .header p{ display:none }              /* ocultamos el subtítulo para ganar espacio */
+  .nav a{ display:none }                 /* oculta Menú/Promos/Contacto; el CTA será el carrito */
+  .cart-btn{ padding:.5rem .7rem }       /* botón más compacto */
 }
 
-.precio {
-  color: #ff5722;
-  font-weight: 700;
+/* 3) Hero 100% móvil (ya se apila con tu media query, afinamos tamaños) */
+@media (max-width: 640px){
+  .hero{ padding:1.2rem 1rem; border-radius:16px }
+  .hero h2{ font-size: clamp(1.4rem, 5.5vw + .2rem, 1.9rem); }
+  .hero-text p{ font-size:.95rem }
+  .hero-img{ max-height:210px; border-radius:14px }
 }
-.titulo-parrilla {
-  color: #000000;        /* negro puro */
-  font-weight: 900;      /* extra negrita */
-  font-size: 1.1rem;     /* ligeramente más grande si deseas */
+
+/* 4) Chips y buscador: scroll suave y ancho completo */
+.section-head{ gap:.6rem; }
+.filters{ gap:.5rem; padding-bottom:.3rem }
+.search{ width:100%; max-width:none }
+
+/* 5) Grid de productos optimizado para móvil */
+@media (max-width: 540px){
+  #product-grid{
+    grid-template-columns: repeat(2, minmax(0,1fr)); /* 2 por fila en la mayoría de móviles */
+    gap: 14px;
+  }
+  .card > img{ height: 160px; }          /* imágenes un poco más bajas en móvil */
+  .card-body{ padding:12px }
+  .card-body h4{ font-size:.98rem }
+  .price-actions .price{ font-size:.98rem }
+  .add-btn{ padding:.55rem .75rem }
 }
+
+/* 6) Cart/drawer: que no “aplasten” los campos */
+@media (max-width: 420px){
+  .cart{ width: 100%; }                  /* drawer ancho completo en móviles pequeños */
+  .ci{ grid-template-columns:52px 1fr auto }
+  .ci img{ width:52px;height:52px }
+}
+
+/* 7) Anclas correctas con header fijo y scroll suave */
+[id] { scroll-margin-top: 84px; }
+html { scroll-behavior: smooth; }
+/* ====== Contacto móvil pro ====== */
+.contacto{
+  background:#fffaf3;
+  padding:1.4rem;
+  border-radius:18px;
+  box-shadow:0 4px 20px rgba(0,0,0,.05);
+  margin:2rem 0;
+}
+.contacto-head{
+  text-align:center;
+  display:grid;
+  gap:.5rem;
+  margin-bottom:1rem;
+}
+.contacto-head h3{
+  font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+  color:var(--brand);
+  margin:0;
+}
+.contacto-sub{ margin:0; color:#555; }
+.contacto-cta{
+  justify-content:center;
+  width:100%;
+  min-height:48px;            /* cómodo para dedo */
+  border-radius:12px;
+  font-weight:700;
+  gap:.55rem;
+  margin:.4rem 0 .2rem;
+}
+.help{ margin:.2rem 0 0; color:#6b6b6b; font-size:.95rem; }
+
+/* Tarjetas en grid fluidas */
+.contact-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+@media (max-width: 760px){
+  .contact-cards{ grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 460px){
+  .contact-cards{ grid-template-columns:1fr; }
+}
+
+.c-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:1rem;
+  text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  transition:transform .15s ease, box-shadow .2s ease;
+}
+.c-card:hover{ transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.08); }
+.c-icon{ font-size:1.5rem; display:block; margin-bottom:.35rem; }
+.c-card h5{ margin:.15rem 0 .25rem; color:var(--brand-2); font-size:1rem; }
+.c-card p{ margin:0; color:#333; }
+.link-cta{
+  color:var(--brand);
+  font-weight:700;
+  text-decoration:none;
+  padding:.25rem .4rem;
+  border-radius:8px;
+}
+.link-cta:hover{ text-decoration:underline; }
+
+/* Ajustes táctiles y foco accesible */
+.btn, .btn-whatsapp, .link-cta, .c-card a{ min-height:44px; }
+:focus-visible{ outline:3px solid var(--brand-2); outline-offset:2px; }
+
+/* Espaciado interno en pantallas pequeñas */
+@media (max-width:640px){
+  .contacto{ padding:1.1rem; }
+}
+
 
