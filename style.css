@@ -410,26 +410,25 @@ html { scroll-behavior: smooth; }
     white-space:nowrap;
   }
 }
-/* --- Miniatura de mapa en la sección de contacto --- */
-.map-miniatura {
+.mapa-miniatura {
   width: 100%;
-  max-width: 250px; /* Tamaño máximo en PC */
-  border-radius: 8px; /* Bordes redondeados */
-  margin-top: 5px;
-  cursor: pointer;
+  max-width: 280px;
+  height: 180px;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.map-miniatura:hover {
-  transform: scale(1.03);
+.mapa-miniatura:hover {
+  transform: scale(1.02);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* Ajuste para pantallas pequeñas */
 @media (max-width: 768px) {
-  .map-miniatura {
-    max-width: 100%; /* Que ocupe todo el ancho disponible en móvil */
+  .mapa-miniatura {
+    max-width: 100%;
   }
 }
+
 
