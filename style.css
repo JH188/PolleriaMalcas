@@ -370,3 +370,43 @@ html { scroll-behavior: smooth; }
 }
 
 
+
+/* Barra de 3 enlaces, limpia y ordenada */
+.quick-nav{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:flex-start;
+  margin:12px 0;
+  flex-wrap:wrap;
+}
+
+.q-link{
+  padding:10px 14px;
+  border:1px solid #eee;
+  border-radius:9999px;         /* pastillas */
+  background:#fff;
+  font-weight:600;
+  text-decoration:none;
+  color:#222;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+  transition:transform .08s;
+}
+.q-link:active{ transform:scale(.98); }
+
+/* Desktop: en línea */
+@media (min-width: 769px){
+  .q-link{ /* tamaño cómodo */
+    padding:10px 16px;
+  }
+}
+
+/* Móvil: 3 botones iguales, ordenados */
+@media (max-width: 768px){
+  .quick-nav{ display:flex !important; }     /* por si algo los ocultaba */
+  .q-link{
+    flex:1 1 calc(33.333% - 10px);           /* tres columnas iguales */
+    text-align:center;
+    white-space:nowrap;
+  }
+}
