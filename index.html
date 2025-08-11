@@ -31,24 +31,29 @@
     </div>
 
     <!-- Header -->
-    <header class="header container">
-      <div class="brand">
-        <!-- Renombra a 'imagenes/logo.jpg' (sin espacio) -->
-        <img src="imagenes/logo .jpg" alt="Pollería Malca's" class="logo" loading="lazy" />
-        <div>
-          <h1>Pollería Malca's</h1>
-          <p>Sabroso, rápido y al toque 🔥</p>
-        </div>
-      </div>
-      <nav class="nav">
-        <a href="#menu">Menú</a>
-        <a href="#promos">Promo Cumplañero </a>
-        <a href="#contacto">Contacto</a>
-        <button id="openCart" class="btn cart-btn">
-          🛒 Ver carrito <span id="cart-count">0</span>
-        </button>
-      </nav>
-    </header>
+<header class="header container">
+  <div class="brand">
+    <img src="imagenes/logo.jpg" alt="Pollería Malca's" class="logo" loading="lazy" />
+    <div>
+      <h1>Pollería Malca's</h1>
+      <p>Sabroso, rápido y al toque 🔥</p>
+    </div>
+  </div>
+
+  <!-- Navegación rápida SOLO con esas 3 partes -->
+  <div class="quick-nav" aria-label="Navegación rápida">
+    <a class="q-link" href="#menu">Menú</a>
+    <a class="q-link" href="#promos">Promociones</a>
+    <a class="q-link" href="#contacto">Contacto</a>
+  </div>
+
+  <nav class="nav">
+    <button id="openCart" class="btn cart-btn">
+      🛒 Ver carrito <span id="cart-count">0</span>
+    </button>
+  </nav>
+</header>
+
 
     <!-- Hero -->
     <section class="hero container" id="inicio">
@@ -1070,6 +1075,7 @@
     <script src="app.js"></script>
   </body>
 </html>
+
 
 
 
