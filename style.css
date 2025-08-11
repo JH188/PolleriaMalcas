@@ -410,3 +410,26 @@ html { scroll-behavior: smooth; }
     white-space:nowrap;
   }
 }
+/* --- Miniatura de mapa en la sección de contacto --- */
+.map-miniatura {
+  width: 100%;
+  max-width: 250px; /* Tamaño máximo en PC */
+  border-radius: 8px; /* Bordes redondeados */
+  margin-top: 5px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.map-miniatura:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 768px) {
+  .map-miniatura {
+    max-width: 100%; /* Que ocupe todo el ancho disponible en móvil */
+  }
+}
+
