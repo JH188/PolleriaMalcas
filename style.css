@@ -549,3 +549,89 @@ html { scroll-behavior: smooth; }
   .social-buttons { grid-template-columns: 1fr; }
 }
 
+
+/* ===== Fix Redes Sociales en PC ===== */
+@media (min-width: 992px) {
+  /* Contenedor centrado y ancho controlado */
+  .social-section .container {
+    max-width: 1080px;
+    margin-inline: auto;
+  }
+
+  .social-section { padding: 36px 0 24px; }
+
+  /* Grid de 2 columnas más sólido en desktop */
+  .social-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 340px);
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .social-btn {
+    padding: 14px 18px;
+    border-radius: 16px;
+  }
+
+  .social-btn .label strong { font-size: 16px; }
+  .social-btn .label small  { font-size: 13px; }
+}
+
+/* --- Forzar tamaño de los SVG para anular reglas globales --- */
+.social-section .title-icon,
+.social-section .social-btn .icon-wrap svg {
+  width: 22px !important;
+  height: 22px !important;
+  max-width: none !important;
+  max-height: none !important;
+  display: block;
+  flex: 0 0 auto;
+}
+.social-section .icon-wrap {
+  width: 38px; height: 38px;  /* asegura contenedor fijo */
+}
+
+/* ===== Extra info redes ===== */
+.social-extra {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.social-counter {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 12px;
+}
+
+.social-counter div {
+  display: grid;
+  line-height: 1.2;
+}
+
+.social-counter strong {
+  font-size: 20px;
+  color: #d62828;
+}
+
+.social-counter span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.social-cta a {
+  font-weight: 600;
+  color: #d62828;
+  text-decoration: none;
+}
+
+.social-cta a:hover {
+  text-decoration: underline;
+}
+
+/* Solo para PC: más grande y con más aire */
+@media (min-width: 992px) {
+  .social-counter strong { font-size: 22px; }
+  .social-counter span { font-size: 14px; }
+  .social-extra { margin-top: 28px; }
+}
