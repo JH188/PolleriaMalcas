@@ -957,71 +957,64 @@
       </div>
     </section>
 
-  <!-- Contacto -->
-    <section
-      id="contacto"
-      class="contacto container"
-      aria-labelledby="contacto-title"
-    >
-      <div class="contacto-head">
-        <h3 id="contacto-title">📞 Haz tu pedido</h3>
-        <p class="contacto-sub">
-          Escríbenos por WhatsApp o arma tu pedido con el carrito.
-        </p>
+  <!-- Contacto PRO (layout ordenado) -->
+<section id="contacto" class="contacto contacto-pro container" aria-labelledby="contacto-title">
 
-        <a
-          id="whatsapp-direct"
-          class="btn btn-whatsapp big contacto-cta"
-          target="_blank"
-          rel="noopener"
-        >
-          <img src="imagenes/whatsapp.jpg" alt="WhatsApp" class="wsp-icon" />
-          <span>Pedir por WhatsApp</span>
-        </a>
+  <div class="contacto-grid">
+    <!-- Columna IZQUIERDA: CTA + accesos + badges -->
+    <div class="c-left">
+      <span class="pill pill-hours">🕒 Hoy: 12:00 pm – 11:45 pm</span>
+      <h3 id="contacto-title">📞 ¡Haz tu pedido ahora!</h3>
+      <p class="muted">Escríbenos por WhatsApp o arma tu pedido con el carrito.</p>
 
-        <p class="help">🕒 Atendemos de 12:00 pm a 11:45 pm</p>
+      <a id="whatsapp-direct" class="cta-wsp"
+         href="https://wa.me/51910006174?text=Hola%20Malca%27s%2C%20quiero%20hacer%20un%20pedido%20🍗"
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M19.1 17.4c-.2-.1-1.3-.7-1.4-.8s-.3-.1-.4.1-.5.8-.7 1c-.1.1-.2.1-.4 0a6.4 6.4 0 0 1-3-2.6c-.2-.3 0-.4.1-.5l.3-.4c.2-.2.2-.3.3-.4l.1-.2c.1-.1 0-.3 0-.4l-.8-2c-.1-.3-.2-.3-.4-.3h-.4c-.1 0-.4.1-.7.4s-1 1-1 2.4 1.1 2.8 1.2 3 .9 1.4 2.2 2.4 2.7 1.3 3.1 1.4.9.1 1.2.1 1-.2 1.2-.5.5-.8.6-1.1.1-.8 0-.9-.2-.1-.4-.2Zm-3.1 7.9a9.4 9.4 0 0 1-4.8-1.3l-3.4.9.9-3.3a9.5 9.5 0 1 1 7.3 3.7Zm0-21.8A12.2 12.2 0 0 0 3.8 20.7L2 27.8l7.2-1.9a12.2 12.2 0 1 0 6.8-22.4Z"/></svg>
+        Pedir por WhatsApp
+      </a>
+
+      <div class="quick-acts" aria-label="Accesos rápidos">
+        <a class="qbtn" href="tel:+51910006174">📲 Llamar</a>
+        <a class="qbtn" href="https://www.facebook.com/pollosmalcas/messages" target="_blank" rel="noopener">💬 Inbox Facebook</a>
+        <a class="qbtn" href="https://www.google.com/maps?q=-11.8244776,-77.1307304" target="_blank" rel="noopener">🧭 Cómo llegar</a>
       </div>
 
-      <div class="contact-cards">
-        <article class="c-card">
-          <span class="c-icon" aria-hidden="true">📱</span>
-          <h5>Teléfono</h5>
-          <p>
-            <a class="link-cta" href="tel:+51910006174" title="Llamar ahora"
-              >910 006 174</a
-            >
-          </p>
+      <ul class="trust">
+        <li>🚚 Delivery gratis</li>
+        <li>💳 Yape / Efectivo</li>
+        <li>🔥 Pollo a la leña</li>
+      </ul>
+    </div>
+
+    <!-- Columna DERECHA: tarjetas -->
+    <div class="c-right">
+      <div class="info-grid">
+        <article class="cbox">
+          <div class="cbox-head"><span>📱</span><h5>Teléfono</h5></div>
+          <p><a class="link-cta" href="tel:+51910006174">910 006 174</a></p>
         </article>
 
-        <article class="c-card">
-          <span class="c-icon" aria-hidden="true">🏠</span>
-          <h5>Dirección</h5>
-          <p>Ventanilla – Luis Felipe de las Casas, MZ P LT 01</p>
+        <article class="cbox">
+          <div class="cbox-head"><span>🏠</span><h5>Dirección</h5></div>
+          <p>Ventanilla — Luis Felipe de las Casas, MZ P LT 01</p>
         </article>
 
-<article class="c-card">
-  <span class="c-icon" aria-hidden="true">🗺️</span>
-  <h5>Ubicación</h5>
-
-  <div class="mapa-wrap">
-    <iframe
-      src="https://www.google.com/maps?q=-11.8244776,-77.1307304&z=17&output=embed"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+        <article class="cbox map-card">
+          <div class="cbox-head"><span>🗺️</span><h5>Ubicación</h5></div>
+          <div class="mapa-wrap">
+            <iframe
+              src="https://www.google.com/maps?q=-11.8244776,-77.1307304&z=17&output=embed"
+              loading="lazy" title="Mapa de Pollería Malca's"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <p><a class="link-cta" href="https://www.google.com/maps?q=-11.8244776,-77.1307304" target="_blank" rel="noopener">Ver ubicación exacta</a></p>
+        </article>
+      </div>
+    </div>
   </div>
+</section>
 
-  <p>
-    <a class="link-cta"
-       href="https://www.google.com/maps?q=-11.8244776,-77.1307304"
-       target="_blank" rel="noopener">
-      Ver ubicación exacta
-    </a>
-  </p>
-</article>
-
-      </div>
-    </section>
     <!-- Redes Sociales PRO -->
 <section class="social-section">
   <div class="container">
@@ -1123,19 +1116,11 @@
     </aside>
     <div id="overlay" class="overlay"></div>
 
-    <!-- Botón flotante WhatsApp -->
-    <a
-      class="wsp-float"
-      id="wsp-float"
-      target="_blank"
-      rel="noopener"
-      aria-label="WhatsApp"
-      >💬</a
-    >
-
+    
     <script src="app.js"></script>
   </body>
 </html>
+
 
 
 
