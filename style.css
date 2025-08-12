@@ -592,4 +592,49 @@ html { scroll-behavior: smooth; }
 }
 
 
+/* ===== Extra info redes ===== */
+.social-extra {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.social-counter {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 12px;
+}
+
+.social-counter div {
+  display: grid;
+  line-height: 1.2;
+}
+
+.social-counter strong {
+  font-size: 20px;
+  color: #d62828;
+}
+
+.social-counter span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.social-cta a {
+  font-weight: 600;
+  color: #d62828;
+  text-decoration: none;
+}
+
+.social-cta a:hover {
+  text-decoration: underline;
+}
+
+/* Solo para PC: más grande y con más aire */
+@media (min-width: 992px) {
+  .social-counter strong { font-size: 22px; }
+  .social-counter span { font-size: 14px; }
+  .social-extra { margin-top: 28px; }
+}
+
 
