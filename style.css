@@ -456,3 +456,96 @@ html { scroll-behavior: smooth; }
 
 
 
+/* === Redes Sociales PRO === */
+.social-section {
+  background: #fff;
+  padding: 28px 0 18px;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+
+.social-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #d62828; /* color de marca */
+  margin: 0 0 14px;
+}
+
+.title-icon {
+  width: 22px; height: 22px;
+  fill: #d62828;
+}
+
+.social-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 280px));
+  gap: 14px;
+  justify-content: center;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 14px;
+  padding: 12px 14px;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.1);
+  border-color: rgba(0,0,0,.12);
+}
+
+.social-btn .icon-wrap {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.social-btn svg {
+  width: 22px; height: 22px;
+  fill: currentColor;
+}
+
+.social-btn .label {
+  display: grid;
+  line-height: 1.1;
+  color: #111;
+}
+
+.social-btn .label strong {
+  font-size: 15px;
+}
+
+.social-btn .label small {
+  font-size: 12px;
+  opacity: .75;
+}
+
+/* Colores de marca */
+.social-btn.fb { color: #1877F2; }
+.social-btn.fb .icon-wrap { background: rgba(24,119,242,.08); }
+
+.social-btn.tt { color: #111; }
+.social-btn.tt .icon-wrap {
+  /* borde sutil con toque TikTok */
+  background: radial-gradient(circle at 30% 30%, rgba(0,0,0,.06), rgba(0,0,0,.03));
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .social-buttons { grid-template-columns: 1fr; }
+}
+
