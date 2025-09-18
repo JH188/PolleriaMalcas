@@ -20,6 +20,37 @@
   gtag('config', 'G-ZRCNZK79EH');
 </script>
   </head>
+   <script>
+  // Tilt 3D suave con el mouse (sin librerías)
+  (function(){
+    const bar = document.querySelector('.topbar');
+    const inner = document.querySelector('.topbar .container');
+    if(!bar || !inner) return;
+
+    const MAX = 3; // grados
+    let raf;
+
+    function tilt(e){
+      const r = bar.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top)  / r.height;
+      const rx = (0.5 - y) * MAX;
+      const ry = (x - 0.5) * MAX;
+      inner.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+    }
+    function reset(){
+      inner.style.transition = 'transform .35s ease';
+      inner.style.transform = 'rotateX(0) rotateY(0)';
+      setTimeout(()=> inner.style.transition = '', 350);
+    }
+
+    bar.addEventListener('mousemove', e=>{
+      if(raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(()=> tilt(e));
+    });
+    bar.addEventListener('mouseleave', reset);
+  })();
+</script>
   <body>
     <!-- Top bar -->
     <div class="topbar">
@@ -1150,6 +1181,7 @@
     <script src="app.js"></script>
   </body>
 </html>
+
 
 
 
