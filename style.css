@@ -811,3 +811,78 @@ html { scroll-behavior: smooth; }
 
 
 
+
+
+
+
+
+/* ===== Contacto PRO ===== */
+.contacto-pro{
+  display:grid; grid-template-columns:1.2fr 1fr; gap:2rem; align-items:start;
+  margin-top:2.5rem;
+}
+.c-title{font-size:1.75rem; margin:0 0 .5rem; font-weight:900; letter-spacing:.2px}
+.c-emoji{filter:drop-shadow(0 6px 12px rgba(0,0,0,.12))}
+.c-sub{color:#5c636b; margin:0 0 1rem}
+
+.c-chips{display:flex; flex-wrap:wrap; gap:.5rem; margin:0 0 1.25rem; padding:0}
+.c-chips .chip{
+  list-style:none; font-weight:700; font-size:.9rem; color:#1a1e23;
+  background:#fff; border:1px solid #eceff3; border-radius:999px; padding:.45rem .75rem;
+  box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+/* CTA WhatsApp grande */
+.cta-wsp{
+  display:flex; align-items:center; gap:.9rem; text-decoration:none;
+  background:linear-gradient(135deg,#25d366,#14a94b);
+  color:#061b10; border-radius:16px; padding:.9rem 1.1rem; font-weight:900;
+  box-shadow:0 16px 32px rgba(20,169,75,.25);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.cta-wsp:hover{transform:translateY(-2px); box-shadow:0 22px 44px rgba(20,169,75,.32)}
+.wsp-ico{width:34px; height:34px; border-radius:10px; object-fit:cover; background:#fff}
+.cta-copy{display:flex; flex-direction:column; line-height:1.1}
+.cta-copy strong{font-size:1.05rem}
+.cta-copy span{font-weight:700; font-size:.8rem; color:#09361f; opacity:.85}
+.cta-arrow{margin-left:auto; font-weight:900; font-size:1.2rem}
+
+/* Tarjetas de datos rápidos */
+.quick-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:.9rem; margin-top:1rem}
+.q-card{
+  background:#fff; border:1px solid #eef1f5; border-radius:14px; padding:.9rem;
+  box-shadow:0 10px 22px rgba(0,0,0,.05);
+}
+.q-card h5{margin:.2rem 0 .25rem; font-weight:900}
+.q-card p{margin:0; color:#4d5560; font-weight:600}
+.q-ico{font-size:1.2rem}
+
+/* Tarjeta del mapa */
+.map-card{
+  background:#0f1114; color:#dfe3e8; border-radius:18px; overflow:hidden;
+  box-shadow:0 26px 60px rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.06);
+}
+.map-head, .map-foot{display:flex; justify-content:space-between; align-items:center; padding:.8rem 1rem}
+.map-head{background:linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,0))}
+.map-head strong{font-weight:900}
+.mini-link{color:#9dd8ff; text-decoration:none; font-weight:800; font-size:.9rem}
+.mini-link:hover{text-decoration:underline}
+.mapa-wrap{aspect-ratio:16/10; background:#0b0d10}
+.mapa-wrap iframe{width:100%; height:100%; border:0; display:block}
+.map-foot{gap:.5rem; flex-wrap:wrap}
+.badge{
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+  color:#e9eef5; padding:.35rem .6rem; border-radius:999px; font-weight:800; font-size:.8rem;
+}
+
+/* Responsive */
+@media (max-width:1024px){
+  .contacto-pro{grid-template-columns:1fr}
+  .map-card{order:2}
+}
+@media (max-width:680px){
+  .quick-grid{grid-template-columns:1fr 1fr}
+}
+
+
