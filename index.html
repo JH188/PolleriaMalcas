@@ -968,71 +968,82 @@
       </div>
     </section>
 
- <!-- Contacto -->
-    <section
-      id="contacto"
-      class="contacto container"
-      aria-labelledby="contacto-title"
-    >
-      <div class="contacto-head">
-        <h3 id="contacto-title">📞 Haz tu pedido</h3>
-        <p class="contacto-sub">
-          Escríbenos por WhatsApp o arma tu pedido con el carrito.
-        </p>
+<!-- CONTACTO PRO -->
+<section id="contacto" class="contacto-pro container" aria-labelledby="contacto-title">
+  <!-- Lado izquierdo: texto y CTA -->
+  <div class="c-left">
+    <h3 id="contacto-title" class="c-title">
+      <span class="c-emoji">📞</span> Haz tu pedido
+    </h3>
 
-        <a
-          id="whatsapp-direct"
-          class="btn btn-whatsapp big contacto-cta"
-          target="_blank"
-          rel="noopener"
-        >
-          <img src="imagenes/whatsapp.png" alt="WhatsApp" class="wsp-icon" />
-          <span>Pedir por WhatsApp</span>
-        </a>
+    <p class="c-sub">
+      Escríbenos por WhatsApp o arma tu pedido con el carrito.
+    </p>
 
-        <p class="help">🕒 Atendemos de 12:00 pm a 11:45 pm</p>
+    <!-- Chips de confianza -->
+    <ul class="c-chips" role="list">
+      <li class="chip">🕒 12:00 pm — 11:45 pm</li>
+      <li class="chip">🚚 Delivery gratis hoy</li>
+      <li class="chip">📍 Ventanilla</li>
+    </ul>
+
+    <!-- CTA WhatsApp -->
+    <a id="whatsapp-direct" class="cta-wsp" target="_blank" rel="noopener">
+      <img src="imagenes/whatsapp.jpg" alt="" class="wsp-ico" aria-hidden="true" />
+      <div class="cta-copy">
+        <strong>Pedir por WhatsApp</strong>
+        <span>Respuesta rápida • Confirmación inmediata</span>
       </div>
+      <span class="cta-arrow">→</span>
+    </a>
 
-      <div class="contact-cards">
-        <article class="c-card">
-          <span class="c-icon" aria-hidden="true">📱</span>
-          <h5>Teléfono</h5>
-          <p>
-            <a class="link-cta" href="tel:+51910006174" title="Llamar ahora"
-              >910 006 174</a
-            >
-          </p>
-        </article>
+    <!-- Datos rápidos -->
+    <div class="quick-grid">
+      <article class="q-card">
+        <span class="q-ico" aria-hidden="true">📱</span>
+        <h5>Teléfono</h5>
+        <p><a class="link-cta" href="tel:+51910006174" title="Llamar ahora">910 006 174</a></p>
+      </article>
 
-        <article class="c-card">
-          <span class="c-icon" aria-hidden="true">🏠</span>
-          <h5>Dirección</h5>
-          <p>Ventanilla – Luis Felipe de las Casas, MZ P LT 01</p>
-        </article>
+      <article class="q-card">
+        <span class="q-ico" aria-hidden="true">🏠</span>
+        <h5>Dirección</h5>
+        <p>Ventanilla – Luis Felipe de las Casas, MZ P LT 01</p>
+      </article>
 
-<article class="c-card">
-  <span class="c-icon" aria-hidden="true">🗺️</span>
-  <h5>Ubicación</h5>
-
-  <div class="mapa-wrap">
-    <iframe
-      src="https://www.google.com/maps?q=-11.8244776,-77.1307304&z=17&output=embed"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+      <article class="q-card">
+        <span class="q-ico" aria-hidden="true">💳</span>
+        <h5>Pagos</h5>
+        <p>Efectivo • Yape • Plin</p>
+      </article>
+    </div>
   </div>
 
-  <p>
-    <a class="link-cta"
-       href="https://www.google.com/maps?q=-11.8244776,-77.1307304"
-       target="_blank" rel="noopener">
-      Ver ubicación exacta
-    </a>
-  </p>
-</article>
-
+  <!-- Lado derecho: mapa embebido con marco -->
+  <div class="c-right">
+    <div class="map-card">
+      <div class="map-head">
+        <strong>Ubicación</strong>
+        <a class="mini-link"
+           href="https://www.google.com/maps?q=-11.8244776,-77.1307304"
+           target="_blank" rel="noopener">Abrir en Google Maps</a>
       </div>
-    </section>
+
+      <div class="mapa-wrap">
+        <iframe
+          src="https://www.google.com/maps?q=-11.8244776,-77.1307304&z=17&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-label="Mapa de ubicación">
+        </iframe>
+      </div>
+
+      <div class="map-foot">
+        <span class="badge">Zona: Ventanilla</span>
+        <span class="badge">Cobertura: 3–5 km</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 
     <!-- Redes Sociales PRO -->
 <section class="social-section">
@@ -1139,6 +1150,7 @@
     <script src="app.js"></script>
   </body>
 </html>
+
 
 
 
