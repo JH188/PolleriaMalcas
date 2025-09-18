@@ -642,6 +642,14 @@ html { scroll-behavior: smooth; }
 
 
 
+
+
+
+
+
+
+
+
 /* ===== Hero Full-Bleed ===== */
 .hero-full{
   position: relative;
@@ -802,5 +810,8 @@ html { scroll-behavior: smooth; }
 }
 .header-x.shrink{padding:.55rem 1rem; box-shadow:0 10px 24px rgba(0,0,0,.10)}
 .header-x.shrink .logo-x{width:40px; height:40px}
+
+
+
 
 
