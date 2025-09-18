@@ -816,6 +816,8 @@ html { scroll-behavior: smooth; }
 
 
 
+
+
 /* ===== Contacto PRO ===== */
 .contacto-pro{
   display:grid; grid-template-columns:1.2fr 1fr; gap:2rem; align-items:start;
@@ -884,6 +886,8 @@ html { scroll-behavior: smooth; }
 @media (max-width:680px){
   .quick-grid{grid-template-columns:1fr 1fr}
 }
+
+
 
 
 
