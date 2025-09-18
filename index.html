@@ -21,7 +21,7 @@
 </script>
   </head>
   <body>
-    <!-- Top bar -->
+<!-- Top bar -->
     <div class="topbar">
       <div class="container">
         <span>🚚✨ Delivery Gratis 🆓 </span>
@@ -30,40 +30,50 @@
       </div>
     </div>
 
-    <!-- Header -->
-<header class="header container">
-  <div class="brand">
-    <img src="imagenes/logo .jpg" alt="Pollería Malca's" class="logo" loading="lazy" />
-    <div>
-      <h1>Pollería Malca's</h1>
-      <p>Sabroso, rápido y al toque 🔥</p>
+  <header class="header-x container" id="siteHeader">
+  <a href="#inicio" class="brand-x" aria-label="Inicio">
+    <img src="imagenes/logo .jpg" alt="Pollería Malca's" class="logo-x" loading="lazy" />
+    <div class="copy-x">
+      <h1>Pollería Malca's <span class="badge-x">A la leña</span></h1>
+      <p>Sabroso, rápido y al toque <span class="spark">🔥</span></p>
     </div>
-  </div>
+  </a>
 
-  <!-- Navegación rápida SOLO con esas 3 partes -->
-  <div class="quick-nav" aria-label="Navegación rápida">
-    <a class="q-link" href="#menu">Menú</a>
-    <a class="q-link" href="#promos">Promociones</a>
-    <a class="q-link" href="#contacto">Contacto</a>
-  </div>
-
-  <nav class="nav">
-    <button id="openCart" class="btn cart-btn">
-      🛒 Ver carrito <span id="cart-count">0</span>
-    </button>
+  <nav class="nav-x" aria-label="Navegación principal">
+    <a class="pill-x" href="#menu">Menú</a>
+    <a class="pill-x" href="#promos">Promociones</a>
+    <a class="pill-x" href="#contacto">Contacto</a>
   </nav>
+
+  <button id="openCart" class="cart-x" aria-label="Ver carrito">
+    <span class="cart-ico">🛒</span>
+    <span class="cart-label">Ver carrito</span>
+    <span class="cart-count" id="cart-count">0</span>
+  </button>
 </header>
 
 
-    <!-- Hero -->
-    <section class="hero container" id="inicio">
-      <div class="hero-text">
-        <h2>El mejor <span class="hl">pollo a la leña</span> de la zona</h2>
-        <p>Haz tu pedido en 3 clics y te escribimos por WhatsApp para confirmar.</p>
-        <a href="#menu" class="btn btn-primary">Ver Menú</a>
-      </div>
-      <img src="imagenes/pollo.jpg" alt="Pollo a la brasa" class="hero-img" loading="lazy" />
-    </section>
+
+    <!-- HERO FULL-BLEED con imagen de fondo y texto encima -->
+<section id="inicio" class="hero-full"
+         style="--hero-bg: url('imagenes/pollo.jpg')">
+  <div class="hero-content container">
+    <div class="eyebrow">A la leña • Hecho a mano</div>
+
+    <h2 class="hero-title">
+      El mejor <span>pollo a la leña</span> de la zona
+    </h2>
+
+    <p class="hero-sub">
+      Haz tu pedido en 3 clics y te escribimos por WhatsApp para confirmar.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#menu" class="btn btn-primary">Ver Menú</a>
+      <a href="https://wa.me/51910006174" class="btn btn-outline">Pedir por WhatsApp</a>
+    </div>
+  </div>
+</section>
 
     <!-- Menú + filtros -->
     <section id="menu" class="container">
@@ -1128,6 +1138,7 @@
     <script src="app.js"></script>
   </body>
 </html>
+
 
 
 
