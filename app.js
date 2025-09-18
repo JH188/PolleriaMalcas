@@ -217,3 +217,9 @@ function sendWhatsApp() {
   window.open(url, "_blank");
 }
 
+
+
+
+
+const SH = document.getElementById('siteHeader');
+window.addEventListener('scroll',()=> SH.classList.toggle('shrink', window.scrollY>10));
