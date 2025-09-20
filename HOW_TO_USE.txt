@@ -1,0 +1,25 @@
+    1) Copia TODOS los archivos de esta carpeta a la raíz de tu dominio https://pollosmalcas.xyz/ (no dentro de /img ni /assets).
+       Debe quedar así: https://pollosmalcas.xyz/favicon.ico, https://pollosmalcas.xyz/favicon-32x32.png, etc.
+    2) Agrega el siguiente bloque dentro de <head> de todas tus páginas (index.html, etc.):
+    <!-- Favicons -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="theme-color" content="#8C0303">
+
+<!-- Schema.org Logo (helps Google pick your brand logo) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Pollería Malca's",
+  "url": "https://pollosmalcas.xyz/",
+  "logo": "https://pollosmalcas.xyz/android-chrome-512x512.png",
+  "sameAs": []
+}
+</script>
+
+    3) Sube los cambios. Los navegadores y Google usarán el nuevo icono al recachear/recrawlear el sitio.
