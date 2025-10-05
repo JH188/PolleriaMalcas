@@ -209,7 +209,7 @@ function sendWhatsApp() {
 Gracias por su pedido ❤️`);
 
   // ====== GUARDAR EN BASE DE DATOS (InfinityFree) ======
- fetch("https://pollosmalcas.xyz/backend/guardar_pedido.php", {
+fetch("https://pollosmalcas.infinityfreeapp.com/backend/guardar_pedido.php", {
   method: "POST",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
   body: new URLSearchParams({ nombre, direccion, pago, productos, total })
@@ -217,16 +217,19 @@ Gracias por su pedido ❤️`);
   .then(res => res.text())
   .then(res => {
     console.log("Respuesta del servidor:", res);
-    alert("✅ Pedido guardado correctamente. Abriendo WhatsApp...");
-    // abrir WhatsApp después de guardar
-    setTimeout(() => {
-      const numero = WSP_NUMBER.replace("+", "");
-      const url = `https://wa.me/${numero}?text=${msg}`;
-      window.open(url, "_blank");
-    }, 1000);
+    if (res.includes("OK")) {
+      alert("✅ Pedido guardado correctamente. Abriendo WhatsApp...");
+      setTimeout(() => {
+        const numero = WSP_NUMBER.replace("+", "");
+        const url = `https://wa.me/${numero}?text=${msg}`;
+        window.open(url, "_blank");
+      }, 1000);
+    } else {
+      alert("❌ Error al guardar el pedido:\n" + res);
+    }
   })
   .catch(err => {
     console.error("Error al guardar pedido:", err);
     alert("❌ Hubo un problema al guardar el pedido. Intenta nuevamente.");
   });
-}
+
