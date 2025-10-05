@@ -209,7 +209,7 @@ function sendWhatsApp() {
 Gracias por su pedido ❤️`);
 
   // ====== GUARDAR EN BASE DE DATOS (InfinityFree) ======
- fetch("https://pollosmalcas.infinityfreeapp.com/backend/guardar_pedido.php", {
+ fetch("https://pollosmalcas.xyz/backend/guardar_pedido.php", {
   method: "POST",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
   body: new URLSearchParams({ nombre, direccion, pago, productos, total })
