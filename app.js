@@ -128,6 +128,7 @@ function subtotal() {
 }
 
 function renderCart() {
+  // contador
   const count = cart.reduce((s, p) => s + p.qty, 0);
   const countEl = $("#cart-count");
   if (countEl) countEl.textContent = count;
@@ -184,11 +185,12 @@ function closeCart() {
   $("#overlay")?.classList.remove("show");
 }
 
-// ====== ENVIAR A WHATSAPP Y GUARDAR EN BD ======
+// ====== ENVIAR A WHATSAPP ======
 function sendWhatsApp() {
   const nombre = document.getElementById("cliente")?.value.trim();
   const direccion = document.getElementById("direccion")?.value.trim();
   const pago = document.querySelector('input[name="pago"]:checked')?.value;
+
 
   if (!nombre || !direccion || !pago) {
     alert("Por favor completa todos los campos antes de enviar el pedido.");
@@ -208,8 +210,8 @@ function sendWhatsApp() {
 💳 Pago: ${pago}
 Gracias por su pedido ❤️`);
 
-  // Guardar en base de datos en InfinityFree
-  fetch("https://pollosmalcas.infinityfreeapp.com/guardar_pedido.php", {
+  // Guardar en base de datos
+  fetch("https://pollosmalcas.infinityfreeapp.com/php/guardar_pedido.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({ nombre, direccion, pago, productos, total })
@@ -221,7 +223,7 @@ Gracias por su pedido ❤️`);
 
       // Abrir WhatsApp con el mensaje
       setTimeout(() => {
-        const numero = WSP_NUMBER.replace("+", "");
+        const numero = "51910006174"; // Tu número con +51
         const url = `https://wa.me/${numero}?text=${msg}`;
         window.open(url, "_blank");
       }, 800);
@@ -231,4 +233,5 @@ Gracias por su pedido ❤️`);
       alert("❌ Hubo un problema al guardar el pedido.");
     });
 }
+
 
