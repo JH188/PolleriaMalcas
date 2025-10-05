@@ -892,4 +892,253 @@ html { scroll-behavior: smooth; }
 
 
 
+/* ===== CARRITO ESTILO PREMIUM MALCA’S ===== */
+.cart {
+  position: fixed;
+  right: -440px;
+  top: 0;
+  width: min(420px, 92%);
+  height: 100vh;
+  background: linear-gradient(180deg, #fff, #fff8f3);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, .25);
+  transition: right .45s cubic-bezier(.25, .1, .25, 1);
+  z-index: 250;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px 0 0 16px;
+  overflow: hidden;
+}
+.cart.open { right: 0; }
+
+.cart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.4rem;
+  background: linear-gradient(90deg, #d62828, #f77f00);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .15);
+}
+
+.icon-btn {
+  background: rgba(255,255,255,.15);
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  padding: .4rem .6rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+.icon-btn:hover {
+  background: rgba(255,255,255,.25);
+}
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+.ci {
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  align-items: center;
+  gap: .8rem;
+  background: #fff;
+  border: 1px solid #f2f2f2;
+  border-radius: 14px;
+  padding: .5rem .6rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+.ci img {
+  width: 58px; height: 58px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.ci h5 { margin: 0; font-size: .95rem; font-weight: 700; }
+.ci small { color: #777; }
+
+.cart-note {
+  padding: 0 1.2rem 1rem;
+  display: grid;
+  gap: .6rem;
+}
+.cart-note input,
+.cart-note select {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: .65rem .9rem;
+  font-size: .95rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.cart-note input:focus,
+.cart-note select:focus {
+  border-color: #f77f00;
+  box-shadow: 0 0 0 3px rgba(247,127,0,.2);
+}
+.cart-note select {
+  background: #fff url('imagenes/yape.png') no-repeat right 12px center;
+  background-size: 24px;
+}
+
+/* Cambia el ícono según método de pago */
+#pago option[value="Yape"] { background-image: url('imagenes/yape.png'); }
+#pago option[value="Plin"] { background-image: url('imagenes/plin.jpg'); }
+#pago option[value="BCP"] { background-image: url('imagenes/bcp.jpg'); }
+#pago option[value="Efectivo"] { background-image: url('imagenes/efectivo.png'); }
+
+.cart-foot {
+  background: #fffaf5;
+  border-top: 1px solid #eee;
+  padding: 1.2rem;
+  display: grid;
+  gap: .6rem;
+  box-shadow: 0 -6px 18px rgba(0,0,0,.05);
+}
+.totals {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+}
+.totals span { color: #555; }
+.grand strong {
+  font-size: 1.1rem;
+  color: #d62828;
+}
+
+/* Botón de WhatsApp con efecto Glow */
+.btn-whatsapp.big {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #25d366, #1ebd5a);
+  color: #fff;
+  padding: .9rem 1.2rem;
+  font-weight: 800;
+  font-size: .95rem;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, .4);
+  cursor: pointer;
+  transition: all .25s ease;
+}
+.btn-whatsapp.big img {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.25));
+}
+.btn-whatsapp.big:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 35px rgba(37, 211, 102, .55);
+  filter: brightness(1.05);
+}
+.btn-whatsapp.big:active {
+  transform: scale(.98);
+}
+/* ==== MÉTODOS DE PAGO VISUALES ==== */
+.pago-metodo {
+  margin-top: .6rem;
+  display: grid;
+  gap: .5rem;
+}
+.pago-metodo label {
+  font-weight: 700;
+  color: #333;
+}
+
+.pago-opciones {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pago-opciones label {
+  position: relative;
+  cursor: pointer;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  padding: .3rem;
+  transition: all .2s ease;
+}
+.pago-opciones input {
+  position: absolute;
+  opacity: 0;
+}
+.pago-opciones img {
+  width: 60px; height: 60px;
+  border-radius: 10px;
+  object-fit: contain;
+  display: block;
+  transition: transform .15s ease;
+}
+
+.pago-opciones label:hover img {
+  transform: scale(1.05);
+}
+
+.pago-opciones input:checked + img {
+  border: 2px solid #f77f00;
+  box-shadow: 0 0 10px rgba(247,127,0,.4);
+}
+/* ==== MÉTODOS DE PAGO VISUALES ==== */
+.pago-metodo {
+  margin-top: .8rem;
+  display: grid;
+  gap: .5rem;
+}
+
+.pago-metodo label {
+  font-weight: 700;
+  color: #333;
+  font-size: 1rem;
+}
+
+.pago-opciones {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pago-opciones label {
+  position: relative;
+  cursor: pointer;
+  border: 2px solid #eee;
+  border-radius: 14px;
+  padding: .4rem;
+  transition: all .2s ease;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(0,0,0,.05);
+}
+.pago-opciones input {
+  position: absolute;
+  opacity: 0;
+}
+.pago-opciones img {
+  width: 70px; height: 70px;
+  border-radius: 12px;
+  object-fit: contain;
+  display: block;
+  transition: transform .15s ease;
+}
+
+.pago-opciones label:hover img {
+  transform: scale(1.05);
+}
+
+.pago-opciones input:checked + img {
+  border: 2px solid #f77f00;
+  box-shadow: 0 0 12px rgba(247,127,0,.5);
+}
+
+
+
+
 
