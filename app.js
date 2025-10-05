@@ -1,5 +1,5 @@
-// ====== CONFIGURA TU NÚMERO DE WHATSAPP (solo dígitos, con +51) ======
-const WSP_NUMBER = "+51910006174"; // <-- cámbialo si deseas
+// ====== CONFIGURA TU NÚMERO DE WHATSAPP ======
+const WSP_NUMBER = "+51910006174"; // tu número real
 
 // ====== UTILIDADES ======
 const $ = (q, ctx = document) => ctx.querySelector(q);
@@ -18,7 +18,7 @@ try {
 
 const saveCart = () => localStorage.setItem("malcas_cart", JSON.stringify(cart));
 
-// ====== FILTROS / BUSCADOR (estado) ======
+// ====== FILTROS / BUSCADOR ======
 let currentFilter = "all";
 let currentSearch = "";
 
@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Botón WhatsApp simple (sin carrito)
+  // Botón WhatsApp flotante simple
   const directMsg = encodeURIComponent("Hola, deseo hacer un pedido. ¿Me ayudan por favor? 😄");
   const wspUrl = `https://wa.me/${WSP_NUMBER.replace("+","")}?text=${directMsg}`;
   const wspDirect = $("#whatsapp-direct");
@@ -82,11 +82,11 @@ window.addEventListener("DOMContentLoaded", () => {
   const sendBtn = $("#sendWhatsApp");
   if (sendBtn) sendBtn.addEventListener("click", sendWhatsApp);
 
-  // Primera renderizada
+  // Render inicial
   renderCart();
 });
 
-// ====== FILTRAR / BUSCAR ======
+// ====== FILTRAR ======
 function applyFilters() {
   $$("#product-grid .card").forEach(c => {
     const byCat = (currentFilter === "all") || (c.dataset.cat === currentFilter);
@@ -172,7 +172,7 @@ function renderCart() {
 
   if (subtotalEl) subtotalEl.textContent = money(sub);
   if (deliveryEl) deliveryEl.textContent = "Gratis 😄";
-  if (grandEl) grandEl.textContent = money(sub); // total = solo subtotal
+  if (grandEl) grandEl.textContent = money(sub);
 }
 
 function openCart() {
@@ -185,41 +185,51 @@ function closeCart() {
   $("#overlay")?.classList.remove("show");
 }
 
-// ====== WHATSAPP (envío del pedido) ======
+// ====== ENVIAR A WHATSAPP ======
 function sendWhatsApp() {
-  if (cart.length === 0) { alert("Agrega productos al carrito 🙂"); return; }
+  const nombre = document.getElementById("cliente")?.value.trim();
+  const direccion = document.getElementById("direccion")?.value.trim();
+  const pago = document.querySelector('input[name="pago"]:checked')?.value;
 
-  const nombre = $("#cliente")?.value.trim() || "Cliente";
-  const direccion = $("#direccion")?.value.trim();
-  if (!direccion) { alert("Ingresa tu dirección para el delivery."); return; }
-  const referencia = $("#referencia")?.value.trim() || "";
 
-  const lines = cart
-    .map(p => `• ${p.name} × ${p.qty} — ${money(p.price * p.qty)}`)
-    .join("%0A");
+  if (!nombre || !direccion || !pago) {
+    alert("Por favor completa todos los campos antes de enviar el pedido.");
+    return;
+  }
 
-  const subVal = subtotal();
-  const subTxt = money(subVal);
-  const totalTxt = money(subVal); // delivery gratis
+  // Obtener productos y total del carrito
+  const productos = cart.map(p => `${p.qty}x ${p.name}`).join(", ");
+  const total = subtotal().toFixed(2);
 
-  let msg =
-    `Hola! Soy ${encodeURIComponent(nombre)}.%0A` +
-    `Quiero hacer el siguiente pedido:%0A%0A` +
-    `${lines}%0A%0A` +
-    `Subtotal: ${encodeURIComponent(subTxt)}%0A` +
-    `Delivery: Gratis 😄%0A` +
-    `Total: ${encodeURIComponent(totalTxt)}%0A%0A` +
-    `Dirección: ${encodeURIComponent(direccion)}%0A` +
-    (referencia ? `Referencia: ${encodeURIComponent(referencia)}%0A` : "") +
-    `%0A¿Me confirman el tiempo de entrega?`;
+  // Mensaje para WhatsApp
+  const msg = encodeURIComponent(`📦 *Nuevo Pedido de Pollería Malca's*
+👤 Nombre: ${nombre}
+🏠 Dirección: ${direccion}
+🛒 Productos: ${productos}
+💰 Total: S/ ${total}
+💳 Pago: ${pago}
+Gracias por su pedido ❤️`);
 
-  const url = `https://wa.me/${WSP_NUMBER.replace("+", "")}?text=${msg}`;
-  window.open(url, "_blank");
+  // Guardar en base de datos
+  fetch("guardar_pedido.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ nombre, direccion, pago, productos, total })
+  })
+    .then(res => res.text())
+    .then(res => {
+      console.log("Servidor respondió:", res);
+      alert("✅ Pedido guardado correctamente, abriendo WhatsApp...");
+
+      // Abrir WhatsApp con el mensaje
+      setTimeout(() => {
+        const numero = "51910006174"; // Tu número con +51
+        const url = `https://wa.me/${numero}?text=${msg}`;
+        window.open(url, "_blank");
+      }, 800);
+    })
+    .catch(err => {
+      console.error("Error al guardar pedido:", err);
+      alert("❌ Hubo un problema al guardar el pedido.");
+    });
 }
-
-
-
-
-
-const SH = document.getElementById('siteHeader');
-window.addEventListener('scroll',()=> SH.classList.toggle('shrink', window.scrollY>10));
