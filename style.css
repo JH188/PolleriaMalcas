@@ -1144,208 +1144,77 @@ html { scroll-behavior: smooth; }
 
 
 
-
-
-
-
-
-
-
-
-/* ====== 🛒 Carrito adaptable ====== */
-#cart {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 420px;
-  height: 100vh;
-  background: #fff;
-  box-shadow: -2px 0 15px rgba(0,0,0,0.2);
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  z-index: 999;
-  border-radius: 10px 0 0 10px;
-}
-
-#cart.open {
-  transform: translateX(0);
-}
-
-#overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s ease;
-  z-index: 998;
-}
-#overlay.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Encabezado */
-#cart header {
-  background: var(--naranja);
-  color: white;
-  padding: 16px;
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
-  border-radius: 10px 0 0 0;
-  position: relative;
-}
-
-#closeCart {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  font-size: 22px;
-  cursor: pointer;
-  color: #fff;
-}
-
-/* Lista de productos */
-#cart-items {
-  flex: 1;
-  overflow-y: auto;
-  padding: 15px;
-}
-
-#cart-items .ci {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #fafafa;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-
-#cart-items img {
-  width: 55px;
-  height: 55px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-#cart-items h5 {
-  font-size: 15px;
-  margin: 0;
-  color: #333;
-}
-
-#cart-items small {
-  color: #777;
-  font-size: 13px;
-}
-
-#cart-items .qty {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-#cart-items button {
-  border: none;
-  background: var(--naranja);
-  color: white;
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
-#cart-items button:hover {
-  background: var(--naranja-oscuro);
-}
-
-.icon-btn {
-  background: transparent !important;
-  color: #555 !important;
-  font-size: 18px !important;
-  padding: 0 !important;
-  margin-left: 5px;
-}
-
-/* Totales */
-.cart-footer {
-  padding: 15px;
-  border-top: 1px solid #eee;
-  background: #fff;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-}
-
-.cart-footer div {
-  display: flex;
-  justify-content: space-between;
-  margin: 6px 0;
-  font-size: 15px;
-}
-
-.cart-footer strong {
-  color: var(--naranja);
-  font-size: 16px;
-}
-
-#sendWhatsApp {
-  width: 100%;
-  margin-top: 10px;
-  background: #25D366;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-#sendWhatsApp:hover {
-  background: #1ebe5d;
-}
-
-/* 📱 Adaptación móvil (Android / iPhone) */
-@media (max-width: 768px) {
-  #cart {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
+/* =====🛒 Carrito responsive (solo móvil)===== */
+@media (max-width: 768px){
+  .cart{
+    width:100%;
+    right:-100%;
+    border-radius:0;
   }
-  #cart header {
-    font-size: 20px;
+  .cart.open{ right:0; }
+
+  .cart-head{
+    padding:14px 16px;
+    font-size:1rem;
   }
-  #cart-items {
-    padding: 10px;
+  .icon-btn{
+    font-size:1.35rem;
+    padding:.6rem .7rem;
+    background:rgba(255,255,255,.18);
   }
-  #cart-items img {
-    width: 45px;
-    height: 45px;
+
+  .cart-items{
+    padding:12px;
+    gap:10px;
   }
-  #cart-items .ci {
-    flex-direction: row;
-    gap: 10px;
+  .ci{
+    grid-template-columns:52px 1fr auto;
+    padding:10px;
+    gap:.7rem;
   }
-  #cart-items .qty button {
-    padding: 6px 10px;
-    font-size: 18px;
+  .ci img{ width:52px; height:52px; }
+
+  /* Botones − / + grandes, negros y visibles */
+  .qty{ gap:.5rem; }
+  .qty button{
+    padding:6px 10px;
+    font-size:18px;
+    font-weight:800;
+    color:#111;
+    border:1px solid var(--line);
+    background:#fff;
   }
-  .cart-footer {
-    font-size: 16px;
+  .qty button svg{ fill:currentColor; stroke:currentColor; }
+
+  .cart-note{ padding:0 1rem 1rem; gap:.5rem; }
+  .cart-foot{
+    position:sticky; bottom:0; left:0; right:0;
+    padding:12px;
+    box-shadow:0 -6px 18px rgba(0,0,0,.08);
+    z-index:2;
   }
-  #sendWhatsApp {
-    font-size: 18px;
-    padding: 14px;
+  .btn-whatsapp.big{ padding:14px; font-size:1rem; }
+
+  /* Métodos de pago más compactos en móvil */
+  .pago-opciones{ gap:8px; }
+  .pago-opciones img{ width:56px; height:56px; border-radius:10px; }
+}
+
+/* Ajuste extra para pantallas muy pequeñas */
+@media (max-width: 380px){
+  .ci{ grid-template-columns:46px 1fr auto; }
+  .ci img{ width:46px; height:46px; }
+  .pago-opciones img{ width:52px; height:52px; }
+}
+
+/* iPhone notch / safe area */
+@supports (-webkit-touch-callout: none){
+  .cart-foot{
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
   }
 }
 
-/* 📱 iPhone estilo notch fix */
-@supports (-webkit-touch-callout: none) {
-  #cart {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-}
+/* (Opcional) bloquear scroll del fondo cuando el carrito esté abierto */
+.body-lock{ overflow:hidden; }
+
 
