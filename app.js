@@ -29,8 +29,8 @@ window.addEventListener("DOMContentLoaded", () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   // Botón WhatsApp flotante simple
-  const directMsg = encodeURIComponent("Hola, deseo hacer un pedido. ¿Me ayudan por favor? 😄");
-  const wspUrl = `https://wa.me/${WSP_NUMBER.replace("+","")}?text=${directMsg}`;
+  const directMsg = "Hola, deseo hacer un pedido. ¿Me ayudan por favor? 😄";
+  const wspUrl = `https://wa.me/${WSP_NUMBER.replace("+","")}?text=${encodeURIComponent(directMsg)}`;
   const wspDirect = $("#whatsapp-direct");
   const wspFloat = $("#wsp-float");
   if (wspDirect) wspDirect.href = wspUrl;
@@ -199,36 +199,37 @@ function sendWhatsApp() {
   const productos = cart.map(p => `${p.qty}x ${p.name}`).join(", ");
   const total = subtotal().toFixed(2);
 
-  // Mensaje de WhatsApp
-  const msg = encodeURIComponent(`📦 *Nuevo Pedido de Pollería Malca's*
+  // Mensaje de WhatsApp (SIN codificar aquí)
+  const msg = `📦 *Nuevo Pedido de Pollería Malca's*
 👤 Nombre: ${nombre}
-🏠 Dirección: ${direccion}
+📍 Dirección: ${direccion}
 🛒 Productos: ${productos}
 💰 Total: S/ ${total}
 💳 Pago: ${pago}
-Gracias por su pedido ❤️`);
+
+Gracias por su pedido ❤️`;
 
   // ====== GUARDAR EN BASE DE DATOS (InfinityFree) ======
- fetch("https://pollosmalcas.xyz/backend/guardar_pedido.php", {
-  method: "POST",
-  headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  body: new URLSearchParams({ nombre, direccion, pago, productos, total })
-})
-  .then(res => res.text())
-  .then(res => {
-    console.log("Respuesta del servidor:", res);
-    alert("✅ Pedido guardado correctamente. Abriendo WhatsApp...");
-    // abrir WhatsApp después de guardar
-    setTimeout(() => {
-      const numero = WSP_NUMBER.replace("+", "");
-      const url = `https://wa.me/${numero}?text=${msg}`;
-      window.open(url, "_blank");
-    }, 1000);
+  fetch("https://pollosmalcas.xyz/backend/guardar_pedido.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ nombre, direccion, pago, productos, total })
   })
-  .catch(err => {
-    console.error("Error al guardar pedido:", err);
-    alert("❌ Hubo un problema al guardar el pedido. Intenta nuevamente.");
-  });
+    .then(res => res.text())
+    .then(res => {
+      console.log("Respuesta del servidor:", res);
+      alert("✅ Pedido guardado correctamente. Abriendo WhatsApp...");
+      // abrir WhatsApp después de guardar
+      setTimeout(() => {
+        const numero = WSP_NUMBER.replace("+", ""); // deja 51XXXXXXXXX
+        const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
+        window.open(url, "_blank");
+      }, 1000);
+    })
+    .catch(err => {
+      console.error("Error al guardar pedido:", err);
+      alert("❌ Hubo un problema al guardar el pedido. Intenta nuevamente.");
+    });
 }
 
 
