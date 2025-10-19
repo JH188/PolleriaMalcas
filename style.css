@@ -1218,3 +1218,10 @@ html { scroll-behavior: smooth; }
 .body-lock{ overflow:hidden; }
 
 
+
+/* Soporte emoji en desktop */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+               "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji",
+               Arial, sans-serif;
+}
