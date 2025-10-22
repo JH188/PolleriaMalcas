@@ -1,6 +1,16 @@
 // ====== CONFIGURA TU NÚMERO DE WHATSAPP ======
 const WSP_NUMBER = "51910006174"; // SIN +
 
+// ====== GA4 helper (para enviar eventos de Analytics) ======
+function gaSafeEvent(name, params = {}) {
+  if (typeof gtag === "function") {
+    try { gtag("event", name, params); } catch (_) {}
+  } else {
+    // Para depurar si gtag no está disponible
+    console.log("[GA4]", name, params);
+  }
+}
+
 /* ====== UTILIDADES ====== */
 const $ = (q, ctx = document) => ctx.querySelector(q);
 const $$ = (q, ctx = document) => Array.from(ctx.querySelectorAll(q));
@@ -113,7 +123,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (closeBtn) closeBtn.addEventListener("click", closeCart);
   if (overlay) overlay.addEventListener("click", closeCart);
 
-  // Enviar por WhatsApp (y guardar en BD)
+  // Enviar por WhatsApp
   const sendBtn = $("#sendWhatsApp");
   if (sendBtn) sendBtn.addEventListener("click", sendWhatsApp);
 
@@ -141,6 +151,13 @@ function addToCart(item) {
   saveCart();
   renderCart();
   openCart();
+
+  // ---- GA4: add_to_cart
+  gaSafeEvent("add_to_cart", {
+    currency: "PEN",
+    value: item.price,
+    items: [{ item_name: item.name, price: item.price, quantity: 1 }]
+  });
 }
 
 function removeFromCart(name) {
@@ -154,7 +171,7 @@ function changeQty(name, delta) {
   if (!it) return;
   it.qty += delta;
   if (it.qty <= 0) {
-    removeFromCart(it.name); // <— BUGFIX
+    removeFromCart(it.name); // BUGFIX
     return;
   }
   saveCart();
@@ -215,6 +232,18 @@ function renderCart() {
 function openCart() {
   $("#cart")?.classList.add("open");
   $("#overlay")?.classList.add("show");
+
+  // ---- GA4: begin_checkout
+  const items = cart.map(p => ({
+    item_name: p.name,
+    price: p.price,
+    quantity: p.qty
+  }));
+  gaSafeEvent("begin_checkout", {
+    currency: "PEN",
+    value: subtotal(),
+    items
+  });
 }
 function closeCart() {
   $("#cart")?.classList.remove("open");
@@ -247,7 +276,21 @@ function sendWhatsApp() {
 
 Gracias por su pedido ❤️`;
 
-  // Guardar en BD (mismo dominio => OK)
+  // ===== GA4: purchase (lo disparamos aquí, antes de abrir WhatsApp)
+  const tid = "ORD-" + Date.now();
+  const items = cart.map(p => ({
+    item_name: p.name,
+    price: p.price,
+    quantity: p.qty
+  }));
+  gaSafeEvent("purchase", {
+    transaction_id: tid,
+    currency: "PEN",
+    value: subtotal(),
+    items
+  });
+
+  // ===== Guardar en BD (si tu backend está activo). Si no, puedes comentarlo.
   fetch("https://pollosmalcas.xyz/backend/guardar_pedido.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -257,14 +300,17 @@ Gracias por su pedido ❤️`;
     .then(res => {
       console.log("Respuesta del servidor:", res);
       alert("✅ Pedido guardado. Abriendo WhatsApp…");
-      // Abrir WhatsApp sin wa.me
       openWhatsApp(msg);
+
+      // opcional: limpiar carrito
+      cart = [];
+      saveCart();
+      renderCart();
     })
     .catch(err => {
       console.error("Error al guardar pedido:", err);
-      alert("❌ Hubo un problema al guardar el pedido. Intenta nuevamente.");
+      // Incluso si falla el backend, abrimos WhatsApp para no perder el pedido
+      openWhatsApp(msg);
     });
 }
-
-
 
