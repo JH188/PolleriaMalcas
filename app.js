@@ -6,7 +6,6 @@ function gaSafeEvent(name, params = {}) {
   if (typeof gtag === "function") {
     try { gtag("event", name, params); } catch (_) {}
   } else {
-    // Para depurar si gtag no está disponible
     console.log("[GA4]", name, params);
   }
 }
@@ -66,13 +65,11 @@ function openWhatsApp(rawText) {
   const msg = encodeURIComponent(clampMsg(rawText));
 
   if (isMobile()) {
-    // App nativa → fallback API
     location.href = `whatsapp://send?phone=${phone}&text=${msg}`;
     setTimeout(() => {
       location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
     }, 800);
   } else {
-    // Desktop: Web WhatsApp → fallback API
     location.href = `https://web.whatsapp.com/send?phone=${phone}&text=${msg}`;
     setTimeout(() => {
       location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
@@ -144,9 +141,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const sendBtn = $("#sendWhatsApp");
   if (sendBtn) sendBtn.addEventListener("click", sendWhatsApp);
 
-  // Render inicial
+  // Render inicial + emitir carrito al admin
   renderCart();
-  emitCart(); // envía estado inicial del carrito al admin
+  emitCart();
 });
 
 /* ====== FILTRAR ====== */
@@ -168,7 +165,7 @@ function addToCart(item) {
   }
   saveCart();
   renderCart();
-  emitCart();  // <<< realtime admin
+  emitCart();  // realtime admin
   openCart();
 
   // ---- GA4: add_to_cart
@@ -183,7 +180,7 @@ function removeFromCart(name) {
   cart = cart.filter(p => p.name !== name);
   saveCart();
   renderCart();
-  emitCart();  // <<< realtime admin
+  emitCart();  // realtime admin
 }
 
 function changeQty(name, delta) {
@@ -191,12 +188,12 @@ function changeQty(name, delta) {
   if (!it) return;
   it.qty += delta;
   if (it.qty <= 0) {
-    removeFromCart(it.name); // BUGFIX
+    removeFromCart(it.name);
     return;
   }
   saveCart();
   renderCart();
-  emitCart();  // <<< realtime admin
+  emitCart();  // realtime admin
 }
 
 function subtotal() {
@@ -305,10 +302,10 @@ Gracias por su pedido ❤️`;
     direccion,
     pago,
     items: cart.map(p => ({ name: p.name, price: p.price, qty: p.qty })),
-    productos,                   // string legible
+    productos,               // string legible
     total: Number(total)
   };
-  saveOrderLocally(order);       // guarda y emite a admin.html
+  saveOrderLocally(order);   // guarda y emite a admin.html
 
   // ===== GA4: purchase (antes de abrir WhatsApp)
   const items = cart.map(p => ({
@@ -323,7 +320,7 @@ Gracias por su pedido ❤️`;
     items
   });
 
-  // ===== Guardar en BD (si tu backend está activo). Si no, puedes comentarlo.
+  // ===== Guardar en BD (opcional si tu backend está activo)
   fetch("https://pollosmalcas.xyz/backend/guardar_pedido.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
