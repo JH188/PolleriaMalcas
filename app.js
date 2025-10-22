@@ -1,12 +1,12 @@
 // ====== CONFIGURA TU NÚMERO DE WHATSAPP ======
-const WSP_NUMBER = "+51910006174"; // tu número real
+const WSP_NUMBER = "51910006174"; // SIN +
 
-// ====== UTILIDADES ======
+/* ====== UTILIDADES ====== */
 const $ = (q, ctx = document) => ctx.querySelector(q);
 const $$ = (q, ctx = document) => Array.from(ctx.querySelectorAll(q));
 const money = n => `S/ ${Number(n).toFixed(2)}`;
 
-// ====== ESTADO DEL CARRITO ======
+/* ====== ESTADO DEL CARRITO ====== */
 let cart = []; // [{name, price, qty, img}]
 const DELIVERY = 0; // Delivery gratis
 
@@ -15,26 +15,61 @@ try {
   const saved = localStorage.getItem("malcas_cart");
   if (saved) cart = JSON.parse(saved);
 } catch (_) {}
-
 const saveCart = () => localStorage.setItem("malcas_cart", JSON.stringify(cart));
 
-// ====== FILTROS / BUSCADOR ======
+/* ====== FILTROS / BUSCADOR ====== */
 let currentFilter = "all";
 let currentSearch = "";
 
-// ====== INICIAL ======
+/* ====== helpers WhatsApp ====== */
+const MAX_MSG = 1200;
+function isMobile() {
+  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
+}
+function clampMsg(txt, max = MAX_MSG) {
+  if (!txt) return "";
+  return txt.length <= max ? txt : txt.slice(0, max - 20) + "… (mensaje resumido)";
+}
+let clicking = false;
+function openWhatsApp(rawText) {
+  if (clicking) return;
+  clicking = true;
+
+  const phone = WSP_NUMBER.replace(/\D/g, "");
+  const msg = encodeURIComponent(clampMsg(rawText));
+
+  if (isMobile()) {
+    // App nativa → fallback API
+    location.href = `whatsapp://send?phone=${phone}&text=${msg}`;
+    setTimeout(() => {
+      location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
+    }, 800);
+  } else {
+    // Desktop: Web WhatsApp → fallback API
+    location.href = `https://web.whatsapp.com/send?phone=${phone}&text=${msg}`;
+    setTimeout(() => {
+      location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
+    }, 1200);
+  }
+  setTimeout(() => (clicking = false), 2500);
+}
+
+/* ====== INICIAL ====== */
 window.addEventListener("DOMContentLoaded", () => {
   // Año footer
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Botón WhatsApp flotante simple
+  // Botón WhatsApp flotante/directo (SIN wa.me)
   const directMsg = "Hola, deseo hacer un pedido. ¿Me ayudan por favor? 😄";
-  const wspUrl = `https://wa.me/${WSP_NUMBER.replace("+","")}?text=${encodeURIComponent(directMsg)}`;
+  const numero = WSP_NUMBER.replace(/\D/g, "");
+  const directLink = isMobile()
+    ? `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(directMsg)}`
+    : `https://web.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(directMsg)}`;
   const wspDirect = $("#whatsapp-direct");
   const wspFloat = $("#wsp-float");
-  if (wspDirect) wspDirect.href = wspUrl;
-  if (wspFloat) wspFloat.href = wspUrl;
+  if (wspDirect) wspDirect.href = directLink;
+  if (wspFloat) wspFloat.href = directLink;
 
   // Filtros
   $$(".chip").forEach(ch => {
@@ -86,7 +121,7 @@ window.addEventListener("DOMContentLoaded", () => {
   renderCart();
 });
 
-// ====== FILTRAR ======
+/* ====== FILTRAR ====== */
 function applyFilters() {
   $$("#product-grid .card").forEach(c => {
     const byCat = (currentFilter === "all") || (c.dataset.cat === currentFilter);
@@ -95,7 +130,7 @@ function applyFilters() {
   });
 }
 
-// ====== CARRITO ======
+/* ====== CARRITO ====== */
 function addToCart(item) {
   const idx = cart.findIndex(p => p.name === item.name);
   if (idx > -1) {
@@ -118,7 +153,10 @@ function changeQty(name, delta) {
   const it = cart.find(p => p.name === name);
   if (!it) return;
   it.qty += delta;
-  if (it.qty <= 0) removeFromCart(p.name);
+  if (it.qty <= 0) {
+    removeFromCart(it.name); // <— BUGFIX
+    return;
+  }
   saveCart();
   renderCart();
 }
@@ -155,7 +193,7 @@ function renderCart() {
           <button class="icon-btn" title="Quitar">🗑️</button>
         </div>`;
 
-      const [minus, qtyEl, plus, trash] = row.querySelectorAll(".qty > *");
+      const [minus, , plus, trash] = row.querySelectorAll(".qty > *");
       minus.addEventListener("click", () => changeQty(p.name, -1));
       plus.addEventListener("click", () => changeQty(p.name, 1));
       trash.addEventListener("click", () => removeFromCart(p.name));
@@ -178,13 +216,12 @@ function openCart() {
   $("#cart")?.classList.add("open");
   $("#overlay")?.classList.add("show");
 }
-
 function closeCart() {
   $("#cart")?.classList.remove("open");
   $("#overlay")?.classList.remove("show");
 }
 
-// ====== ENVIAR PEDIDO A WHATSAPP Y GUARDAR EN BACKEND ======
+/* ====== ENVIAR PEDIDO A WHATSAPP Y GUARDAR EN BACKEND ====== */
 function sendWhatsApp() {
   const nombre = $("#cliente")?.value.trim();
   const direccion = $("#direccion")?.value.trim();
@@ -199,8 +236,9 @@ function sendWhatsApp() {
   const productos = cart.map(p => `${p.qty}x ${p.name}`).join(", ");
   const total = subtotal().toFixed(2);
 
-  // Mensaje de WhatsApp (SIN codificar aquí)
-  const msg = `📦 *Nuevo Pedido de Pollería Malca's*
+  // Mensaje de WhatsApp (texto plano; lo codificamos dentro de openWhatsApp)
+  const msg =
+`🐔 *Nuevo Pedido de Pollería Malca’s*
 👤 Nombre: ${nombre}
 📍 Dirección: ${direccion}
 🛒 Productos: ${productos}
@@ -209,7 +247,7 @@ function sendWhatsApp() {
 
 Gracias por su pedido ❤️`;
 
-  // ====== GUARDAR EN BASE DE DATOS (InfinityFree) ======
+  // Guardar en BD (mismo dominio => OK)
   fetch("https://pollosmalcas.xyz/backend/guardar_pedido.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -218,18 +256,15 @@ Gracias por su pedido ❤️`;
     .then(res => res.text())
     .then(res => {
       console.log("Respuesta del servidor:", res);
-      alert("✅ Pedido guardado correctamente. Abriendo WhatsApp...");
-      // abrir WhatsApp después de guardar
-      setTimeout(() => {
-        const numero = WSP_NUMBER.replace("+", ""); // deja 51XXXXXXXXX
-        const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank");
-      }, 1000);
+      alert("✅ Pedido guardado. Abriendo WhatsApp…");
+      // Abrir WhatsApp sin wa.me
+      openWhatsApp(msg);
     })
     .catch(err => {
       console.error("Error al guardar pedido:", err);
       alert("❌ Hubo un problema al guardar el pedido. Intenta nuevamente.");
     });
 }
+
 
 
