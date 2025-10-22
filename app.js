@@ -6,17 +6,35 @@ function gaSafeEvent(name, params = {}) {
   if (typeof gtag === "function") {
     try { gtag("event", name, params); } catch (_) {}
   } else {
+    // Para depurar si gtag no está disponible
     console.log("[GA4]", name, params);
   }
 }
 
 /* ====== Realtime Admin (entre pestañas del mismo dominio) ====== */
+// Canal principal
 const bc = new BroadcastChannel('malcas_realtime');
-function broadcast(type, payload) {
-  try { bc.postMessage({ type, payload, at: Date.now() }); } catch (_) {}
+
+// Emisor con fallback por localStorage (garantiza entrega)
+function emit(type, payload) {
+  const msg = { type, payload, at: Date.now() };
+
+  // 1) BroadcastChannel
+  try { bc.postMessage(msg); } catch (e) {
+    console.warn('[RT] BC postMessage falló', e);
+  }
+
+  // 2) Fallback con localStorage → dispara evento "storage"
+  try {
+    localStorage.setItem('__malcas_bus__', JSON.stringify(msg));
+    // lo removemos para no dejar basura
+    localStorage.removeItem('__malcas_bus__');
+  } catch (e) {
+    console.warn('[RT] storage fallback falló', e);
+  }
 }
 function emitCart() {
-  broadcast('cart_update', { cart, subtotal: subtotal() });
+  emit('cart_update', { cart, subtotal: subtotal() });
 }
 function saveOrderLocally(order) {
   const key = 'malcas_orders';
@@ -24,11 +42,11 @@ function saveOrderLocally(order) {
   try { list = JSON.parse(localStorage.getItem(key) || '[]'); } catch(_){}
   list.unshift(order);
   localStorage.setItem(key, JSON.stringify(list));
-  broadcast('order_new', order);
+  emit('order_new', order);
 }
 
 /* ====== UTILIDADES ====== */
-const $ = (q, ctx = document) => ctx.querySelector(q);
+const $  = (q, ctx = document) => ctx.querySelector(q);
 const $$ = (q, ctx = document) => Array.from(ctx.querySelectorAll(q));
 const money = n => `S/ ${Number(n).toFixed(2)}`;
 
@@ -65,11 +83,13 @@ function openWhatsApp(rawText) {
   const msg = encodeURIComponent(clampMsg(rawText));
 
   if (isMobile()) {
+    // App nativa → fallback API
     location.href = `whatsapp://send?phone=${phone}&text=${msg}`;
     setTimeout(() => {
       location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
     }, 800);
   } else {
+    // Desktop: Web WhatsApp → fallback API
     location.href = `https://web.whatsapp.com/send?phone=${phone}&text=${msg}`;
     setTimeout(() => {
       location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
@@ -91,9 +111,9 @@ window.addEventListener("DOMContentLoaded", () => {
     ? `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(directMsg)}`
     : `https://web.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(directMsg)}`;
   const wspDirect = $("#whatsapp-direct");
-  const wspFloat = $("#wsp-float");
+  const wspFloat  = $("#wsp-float");
   if (wspDirect) wspDirect.href = directLink;
-  if (wspFloat) wspFloat.href = directLink;
+  if (wspFloat)  wspFloat.href  = directLink;
 
   // Filtros
   $$(".chip").forEach(ch => {
@@ -120,22 +140,22 @@ window.addEventListener("DOMContentLoaded", () => {
       const card = btn.closest(".card");
       if (!card) return;
       const item = {
-        name: card.dataset.name,
+        name:  card.dataset.name,
         price: Number(card.dataset.price),
-        img: card.querySelector("img")?.getAttribute("src") || "",
-        qty: 1
+        img:   card.querySelector("img")?.getAttribute("src") || "",
+        qty:   1
       };
       addToCart(item);
     });
   });
 
   // Drawer carrito
-  const openBtn = $("#openCart");
+  const openBtn  = $("#openCart");
   const closeBtn = $("#closeCart");
-  const overlay = $("#overlay");
-  if (openBtn) openBtn.addEventListener("click", openCart);
+  const overlay  = $("#overlay");
+  if (openBtn)  openBtn.addEventListener("click", openCart);
   if (closeBtn) closeBtn.addEventListener("click", closeCart);
-  if (overlay) overlay.addEventListener("click", closeCart);
+  if (overlay)  overlay.addEventListener("click", closeCart);
 
   // Enviar por WhatsApp
   const sendBtn = $("#sendWhatsApp");
@@ -149,7 +169,7 @@ window.addEventListener("DOMContentLoaded", () => {
 /* ====== FILTRAR ====== */
 function applyFilters() {
   $$("#product-grid .card").forEach(c => {
-    const byCat = (currentFilter === "all") || (c.dataset.cat === currentFilter);
+    const byCat  = (currentFilter === "all") || (c.dataset.cat === currentFilter);
     const byText = c.dataset.name.toLowerCase().includes(currentSearch);
     c.style.display = (byCat && byText) ? "" : "none";
   });
@@ -240,11 +260,11 @@ function renderCart() {
   const sub = subtotal();
   const subtotalEl = $("#subtotal");
   const deliveryEl = $("#delivery");
-  const grandEl = $("#grand");
+  const grandEl    = $("#grand");
 
   if (subtotalEl) subtotalEl.textContent = money(sub);
   if (deliveryEl) deliveryEl.textContent = "Gratis 😄";
-  if (grandEl) grandEl.textContent = money(sub);
+  if (grandEl)    grandEl.textContent    = money(sub);
 }
 
 function openCart() {
@@ -270,9 +290,9 @@ function closeCart() {
 
 /* ====== ENVIAR PEDIDO A WHATSAPP Y GUARDAR EN BACKEND ====== */
 function sendWhatsApp() {
-  const nombre = $("#cliente")?.value.trim();
+  const nombre    = $("#cliente")?.value.trim();
   const direccion = $("#direccion")?.value.trim();
-  const pago = document.querySelector('input[name="pago"]:checked')?.value;
+  const pago      = document.querySelector('input[name="pago"]:checked')?.value;
 
   if (!nombre || !direccion || !pago) {
     alert("Por favor completa todos los campos antes de enviar el pedido.");
@@ -281,7 +301,7 @@ function sendWhatsApp() {
 
   // Obtener productos y total
   const productos = cart.map(p => `${p.qty}x ${p.name}`).join(", ");
-  const total = subtotal().toFixed(2);
+  const total     = subtotal().toFixed(2);
 
   // Mensaje de WhatsApp (texto plano; lo codificamos dentro de openWhatsApp)
   const msg =
