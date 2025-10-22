@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin — Pollería Malca's</title>
-  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.ico" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { color-scheme: light dark; }
-    .card { @apply bg-white/80 dark:bg-slate-800/60 backdrop-blur rounded-2xl shadow p-4; }
-    .tag { @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold; }
-    .pill { @apply px-2 py-0.5 rounded-full text-xs bg-slate-200 dark:bg-slate-700; }
-    .grid-cols-auto { grid-template-columns: 1fr auto; }
+    .card{ @apply bg-white/80 dark:bg-slate-800/60 backdrop-blur rounded-2xl shadow p-4; }
+    .tag{ @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold; }
+    .pill{ @apply px-2 py-0.5 rounded-full text-xs bg-slate-200 dark:bg-slate-700; }
+    .grid-cols-auto{ grid-template-columns: 1fr auto; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 min-h-screen">
@@ -73,40 +73,19 @@
 
   <script>
     // ===== utils =====
-    const $ = (q, c=document)=>c.querySelector(q);
+    const $  = (q, c=document)=>c.querySelector(q);
     const $$ = (q, c=document)=>Array.from(c.querySelectorAll(q));
     const fmt = n => 'S/ ' + Number(n||0).toFixed(2);
     const key = 'malcas_orders';
 
     // ===== estado =====
     let orders = [];
-    try { orders = JSON.parse(localStorage.getItem(key) || '[]'); } catch(_) {}
+    try { orders = JSON.parse(localStorage.getItem(key) || '[]'); } catch(_){}
 
-    // ===== realtime (escuchar) =====
-    const bc = new BroadcastChannel('malcas_realtime');
+    // ===== realtime setup =====
     let lastBeat = 0;
-
-    bc.onmessage = (ev) => {
-      const { type, payload, at } = ev.data || {};
-      if (!type) return;
-
-      // pulso/status
-      lastBeat = Date.now();
-      setStatus(true);
-
-      if (type === 'cart_update') {
-        renderLiveCart(payload);
-      }
-      if (type === 'order_new') {
-        upsertOrder(payload);
-        renderAll();
-      }
-    };
-
-    // latido visual
     function setStatus(online){
-      const dot = $('#statusDot');
-      const txt = $('#statusText');
+      const dot = $('#statusDot'), txt = $('#statusText');
       if (online) {
         dot.className = 'ml-2 w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block';
         txt.textContent = 'conectado';
@@ -115,15 +94,41 @@
         txt.textContent = 'esperando señal…';
       }
     }
-    setInterval(()=> {
-      const offline = (Date.now() - lastBeat) > 4000;
-      setStatus(!offline);
-    }, 1500);
+    setInterval(()=> setStatus((Date.now()-lastBeat) <= 4000), 1500);
+
+    // 1) BroadcastChannel
+    let bc;
+    try {
+      bc = new BroadcastChannel('malcas_realtime');
+      bc.onmessage = (ev) => handleRealtime(ev.data);
+    } catch(e){
+      console.warn('BroadcastChannel no disponible', e);
+    }
+
+    // 2) Fallback por evento storage (misma clave que usa la tienda)
+    window.addEventListener('storage', (e)=>{
+      if (e.key !== '__malcas_bus__' || !e.newValue) return;
+      try { handleRealtime(JSON.parse(e.newValue)); } catch(_){}
+    });
+
+    // Manejador común
+    function handleRealtime(msg){
+      if (!msg || !msg.type) return;
+      lastBeat = Date.now(); setStatus(true);
+
+      const { type, payload } = msg;
+      if (type === 'cart_update') {
+        renderLiveCart(payload);
+      } else if (type === 'order_new') {
+        upsertOrder(payload);
+        renderAll();
+      }
+    }
 
     // ===== render carrito en vivo =====
     function renderLiveCart(data){
       const live = $('#liveCart');
-      const sub = $('#liveSubtotal');
+      const sub  = $('#liveSubtotal');
       if (!data || !data.cart || data.cart.length === 0) {
         live.innerHTML = '<div class="text-slate-500">Carrito vacío…</div>';
         sub.textContent = 'Subtotal: S/ 0.00';
@@ -134,13 +139,12 @@
       data.cart.forEach(p=>{
         const row = document.createElement('div');
         row.className = 'grid grid-cols-auto gap-2 items-center';
-        row.innerHTML = \`
+        row.innerHTML = `
           <div>
-            <div class="font-medium">\${p.qty}× \${p.name}</div>
-            <div class="text-xs text-slate-500">\${fmt(p.price)} c/u</div>
+            <div class="font-medium">${p.qty}× ${p.name}</div>
+            <div class="text-xs text-slate-500">${fmt(p.price)} c/u</div>
           </div>
-          <div class="text-right font-semibold">\${fmt(p.price * p.qty)}</div>
-        \`;
+          <div class="text-right font-semibold">${fmt(p.price * p.qty)}</div>`;
         live.appendChild(row);
       });
     }
@@ -160,33 +164,30 @@
       renderAll();
     }
 
-    // ===== render pedidos =====
+    // ===== render pedidos / KPIs =====
     function renderAll(){
-      // KPIs
       $('#countOrders').textContent = orders.length;
 
       const today = new Date().toISOString().slice(0,10);
       const todayOrders = orders.filter(o => (o.created_at||'').slice(0,10) === today);
       const totalToday = todayOrders.reduce((s,o)=>s + Number(o.total||0), 0);
       $('#kpiPedidos').textContent = todayOrders.length;
-      $('#kpiTotal').textContent = fmt(totalToday);
+      $('#kpiTotal').textContent   = fmt(totalToday);
 
       // pagos
       const map = {};
       todayOrders.forEach(o => { map[o.pago] = (map[o.pago]||0) + 1; });
-      const pagos = $('#kpiPagos');
-      pagos.innerHTML = '';
+      const pagos = $('#kpiPagos'); pagos.innerHTML = '';
       Object.entries(map).forEach(([k,v])=>{
         const b = document.createElement('span');
         b.className = 'tag bg-slate-200 dark:bg-slate-700';
-        b.textContent = k + ': ' + v;
+        b.textContent = `${k}: ${v}`;
         pagos.appendChild(b);
       });
 
       // lista
       const q = ($('#q').value||'').toLowerCase();
-      const list = $('#orders');
-      list.innerHTML = '';
+      const list = $('#orders'); list.innerHTML = '';
 
       orders
         .filter(o => {
@@ -202,34 +203,33 @@
           div.className = 'py-3';
           const dt = new Date(o.created_at||Date.now());
           const when = dt.toLocaleString();
-          const itemsHtml = (o.items||[]).map(i => \`\${i.qty}× \${i.name} — \${fmt(i.price * i.qty)}\`).join('<br>');
+          const itemsHtml = (o.items||[])
+            .map(i => `${i.qty}× ${i.name} — ${fmt(i.price * i.qty)}`)
+            .join('<br>');
 
-          div.innerHTML = \`
+          div.innerHTML = `
             <div class="flex gap-2 items-start">
               <div class="flex-1">
                 <div class="flex items-center gap-2">
-                  <strong>\${o.nombre||'-'}</strong>
-                  <span class="pill">\${o.pago||'-'}</span>
-                  <span class="text-xs text-slate-500">#\${o.id}</span>
+                  <strong>${o.nombre||'-'}</strong>
+                  <span class="pill">${o.pago||'-'}</span>
+                  <span class="text-xs text-slate-500">#${o.id}</span>
                 </div>
-                <div class="text-sm text-slate-600 dark:text-slate-300">\${o.direccion||''}</div>
-                <div class="mt-2 text-sm">\${itemsHtml || (o.productos||'')}</div>
-                <div class="mt-1 text-[11px] text-slate-500">\${when}</div>
+                <div class="text-sm text-slate-600 dark:text-slate-300">${o.direccion||''}</div>
+                <div class="mt-2 text-sm">${itemsHtml || (o.productos||'')}</div>
+                <div class="mt-1 text-[11px] text-slate-500">${when}</div>
               </div>
               <div class="text-right">
-                <div class="text-base font-bold">\${fmt(o.total||0)}</div>
+                <div class="text-base font-bold">${fmt(o.total||0)}</div>
                 <button class="mt-2 px-2 py-1 rounded bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-xs del">Eliminar</button>
               </div>
-            </div>
-          \`;
-
+            </div>`;
           div.querySelector('.del').addEventListener('click', ()=>{
             if (!confirm('¿Eliminar este pedido del dispositivo?')) return;
             orders = orders.filter(x=>x.id !== o.id);
             localStorage.setItem(key, JSON.stringify(orders));
             renderAll();
           });
-
           list.appendChild(div);
         });
     }
@@ -240,34 +240,31 @@
 
     // export CSV
     $('#btnExport').addEventListener('click', ()=>{
-      const rows = [
-        ['id','fecha','nombre','direccion','pago','productos','total']
-      ];
+      const rows = [['id','fecha','nombre','direccion','pago','productos','total']];
       orders.forEach(o=>{
-        rows.push([
-          o.id,
-          o.created_at,
-          o.nombre||'',
-          o.direccion||'',
-          o.pago||'',
-          o.productos||'',
-          (o.total||0)
-        ]);
+        rows.push([o.id,o.created_at,o.nombre||'',o.direccion||'',o.pago||'',o.productos||'',(o.total||0)]);
       });
       const csv = rows.map(r => r.map(x=>{
-        const s = String(x).replace(/\"/g,'""');
-        return `"${s}"`;
+        const s = String(x).replace(/\"/g,'""'); return `"${s}"`;
       }).join(',')).join('\n');
       const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = 'pedidos-malcas.csv';
       a.click();
-      setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+      setTimeout(()=>URL.revokeObjectURL(a.href), 800);
     });
 
-    // render inicial
+    // ===== render inicial =====
     renderAll();
+
+    // Opcional: al cargar, intenta mostrar el carrito guardado localmente (misma pestaña)
+    try{
+      const carrito = JSON.parse(localStorage.getItem('malcas_cart')||'[]');
+      const subtotal = (carrito||[]).reduce((s,p)=>s + (p.price||0)*(p.qty||0), 0);
+      if (carrito && carrito.length) renderLiveCart({ cart: carrito, subtotal });
+    }catch(_){}
   </script>
 </body>
 </html>
+
