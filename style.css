@@ -1219,4 +1219,6 @@ html { scroll-behavior: smooth; }
 
 
 
+.invalid { outline: 2px solid #ef4444; border-radius: 8px; }
+
 
