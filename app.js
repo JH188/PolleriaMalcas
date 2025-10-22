@@ -27,8 +27,7 @@ function emit(type, payload) {
   // 2) Fallback con localStorage → dispara evento "storage"
   try {
     localStorage.setItem('__malcas_bus__', JSON.stringify(msg));
-    // lo removemos para no dejar basura
-    localStorage.removeItem('__malcas_bus__');
+    localStorage.removeItem('__malcas_bus__'); // no dejamos basura
   } catch (e) {
     console.warn('[RT] storage fallback falló', e);
   }
@@ -157,9 +156,9 @@ window.addEventListener("DOMContentLoaded", () => {
   if (closeBtn) closeBtn.addEventListener("click", closeCart);
   if (overlay)  overlay.addEventListener("click", closeCart);
 
-  // Enviar por WhatsApp
+  // Enviar por WhatsApp (pasamos el event para prevenir si hace falta)
   const sendBtn = $("#sendWhatsApp");
-  if (sendBtn) sendBtn.addEventListener("click", sendWhatsApp);
+  if (sendBtn) sendBtn.addEventListener("click", (e)=>sendWhatsApp(e));
 
   // Render inicial + emitir carrito al admin
   renderCart();
@@ -289,21 +288,41 @@ function closeCart() {
 }
 
 /* ====== ENVIAR PEDIDO A WHATSAPP Y GUARDAR EN BACKEND ====== */
-function sendWhatsApp() {
-  const nombre    = $("#cliente")?.value.trim();
-  const direccion = $("#direccion")?.value.trim();
-  const pago      = document.querySelector('input[name="pago"]:checked')?.value;
+let sending = false; // evita envíos dobles
+function sendWhatsApp(e) {
+  if (e && typeof e.preventDefault === "function") e.preventDefault();
+  if (sending) return;
 
-  if (!nombre || !direccion || !pago) {
-    alert("Por favor completa todos los campos antes de enviar el pedido.");
+  const nombreEl = $("#cliente");
+  const dirEl    = $("#direccion");
+  const pagoEl   = document.querySelector('input[name="pago"]:checked');
+
+  const nombre    = (nombreEl?.value || "").trim();
+  const direccion = (dirEl?.value || "").trim();
+  const pago      = pagoEl?.value || "";
+
+  // Validar carrito + datos
+  if (cart.length === 0) {
+    alert("Tu carrito está vacío. Agrega algún producto antes de enviar el pedido.");
     return;
+  }
+
+  // quitar estado previo
+  [nombreEl, dirEl].forEach(el => el && el.classList.remove("invalid"));
+
+  // Validación de campos obligatorios
+  if (!nombre || !direccion || !pago) {
+    if (!nombre && nombreEl)  { nombreEl.classList.add("invalid"); nombreEl.focus(); }
+    else if (!direccion && dirEl) { dirEl.classList.add("invalid"); dirEl.focus(); }
+    alert("Completa los datos del carrito (nombre, dirección y método de pago) para enviar por WhatsApp.");
+    return; // ← No abre WhatsApp si falta algo
   }
 
   // Obtener productos y total
   const productos = cart.map(p => `${p.qty}x ${p.name}`).join(", ");
   const total     = subtotal().toFixed(2);
 
-  // Mensaje de WhatsApp (texto plano; lo codificamos dentro de openWhatsApp)
+  // Mensaje de WhatsApp
   const msg =
 `🐔 *Nuevo Pedido de Pollería Malca’s*
 👤 Nombre: ${nombre}
@@ -314,7 +333,7 @@ function sendWhatsApp() {
 
 Gracias por su pedido ❤️`;
 
-  // ===== construir pedido para admin (local + realtime)
+  // Pedido para admin (local + realtime)
   const order = {
     id: "ORD-" + Date.now(),
     created_at: new Date().toISOString(),
@@ -327,7 +346,7 @@ Gracias por su pedido ❤️`;
   };
   saveOrderLocally(order);   // guarda y emite a admin.html
 
-  // ===== GA4: purchase (antes de abrir WhatsApp)
+  // GA4: purchase
   const items = cart.map(p => ({
     item_name: p.name,
     price: p.price,
@@ -340,34 +359,38 @@ Gracias por su pedido ❤️`;
     items
   });
 
-  // ===== Guardar en BD (opcional si tu backend está activo)
+  // Evitar doble clic
+  sending = true;
+  const btn = $("#sendWhatsApp");
+  const oldTxt = btn?.textContent;
+  if (btn) { btn.disabled = true; btn.textContent = "Enviando…"; }
+
+  // Guardar en BD (opcional si tu backend está activo)
   fetch("https://pollosmalcas.xyz/backend/guardar_pedido.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({ nombre, direccion, pago, productos, total })
   })
-    .then(res => res.text())
-    .then(res => {
-      console.log("Respuesta del servidor:", res);
-      alert("✅ Pedido guardado. Abriendo WhatsApp…");
-      openWhatsApp(msg);
+  .then(res => res.text())
+  .then(res => {
+    console.log("Respuesta del servidor:", res);
+  })
+  .catch(err => {
+    console.error("Error al guardar pedido:", err);
+  })
+  .finally(() => {
+    // Abrir WhatsApp (solo si pasó validación)
+    openWhatsApp(msg);
 
-      // limpiar carrito
-      cart = [];
-      saveCart();
-      renderCart();
-      emitCart();
-    })
-    .catch(err => {
-      console.error("Error al guardar pedido:", err);
-      // Incluso si falla el backend, abrimos WhatsApp para no perder el pedido
-      openWhatsApp(msg);
+    // limpiar carrito
+    cart = [];
+    saveCart();
+    renderCart();
+    emitCart();
 
-      // limpiar carrito
-      cart = [];
-      saveCart();
-      renderCart();
-      emitCart();
-    });
+    // reset botón
+    if (btn) { btn.disabled = false; btn.textContent = oldTxt || "Enviar pedido por WhatsApp"; }
+    sending = false;
+  });
 }
 
