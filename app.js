@@ -11,6 +11,23 @@ function gaSafeEvent(name, params = {}) {
   }
 }
 
+/* ====== Realtime Admin (entre pestañas del mismo dominio) ====== */
+const bc = new BroadcastChannel('malcas_realtime');
+function broadcast(type, payload) {
+  try { bc.postMessage({ type, payload, at: Date.now() }); } catch (_) {}
+}
+function emitCart() {
+  broadcast('cart_update', { cart, subtotal: subtotal() });
+}
+function saveOrderLocally(order) {
+  const key = 'malcas_orders';
+  let list = [];
+  try { list = JSON.parse(localStorage.getItem(key) || '[]'); } catch(_){}
+  list.unshift(order);
+  localStorage.setItem(key, JSON.stringify(list));
+  broadcast('order_new', order);
+}
+
 /* ====== UTILIDADES ====== */
 const $ = (q, ctx = document) => ctx.querySelector(q);
 const $$ = (q, ctx = document) => Array.from(ctx.querySelectorAll(q));
@@ -129,6 +146,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Render inicial
   renderCart();
+  emitCart(); // envía estado inicial del carrito al admin
 });
 
 /* ====== FILTRAR ====== */
@@ -150,6 +168,7 @@ function addToCart(item) {
   }
   saveCart();
   renderCart();
+  emitCart();  // <<< realtime admin
   openCart();
 
   // ---- GA4: add_to_cart
@@ -164,6 +183,7 @@ function removeFromCart(name) {
   cart = cart.filter(p => p.name !== name);
   saveCart();
   renderCart();
+  emitCart();  // <<< realtime admin
 }
 
 function changeQty(name, delta) {
@@ -176,6 +196,7 @@ function changeQty(name, delta) {
   }
   saveCart();
   renderCart();
+  emitCart();  // <<< realtime admin
 }
 
 function subtotal() {
@@ -276,15 +297,27 @@ function sendWhatsApp() {
 
 Gracias por su pedido ❤️`;
 
-  // ===== GA4: purchase (lo disparamos aquí, antes de abrir WhatsApp)
-  const tid = "ORD-" + Date.now();
+  // ===== construir pedido para admin (local + realtime)
+  const order = {
+    id: "ORD-" + Date.now(),
+    created_at: new Date().toISOString(),
+    nombre,
+    direccion,
+    pago,
+    items: cart.map(p => ({ name: p.name, price: p.price, qty: p.qty })),
+    productos,                   // string legible
+    total: Number(total)
+  };
+  saveOrderLocally(order);       // guarda y emite a admin.html
+
+  // ===== GA4: purchase (antes de abrir WhatsApp)
   const items = cart.map(p => ({
     item_name: p.name,
     price: p.price,
     quantity: p.qty
   }));
   gaSafeEvent("purchase", {
-    transaction_id: tid,
+    transaction_id: order.id,
     currency: "PEN",
     value: subtotal(),
     items
@@ -302,15 +335,22 @@ Gracias por su pedido ❤️`;
       alert("✅ Pedido guardado. Abriendo WhatsApp…");
       openWhatsApp(msg);
 
-      // opcional: limpiar carrito
+      // limpiar carrito
       cart = [];
       saveCart();
       renderCart();
+      emitCart();
     })
     .catch(err => {
       console.error("Error al guardar pedido:", err);
       // Incluso si falla el backend, abrimos WhatsApp para no perder el pedido
       openWhatsApp(msg);
+
+      // limpiar carrito
+      cart = [];
+      saveCart();
+      renderCart();
+      emitCart();
     });
 }
 
