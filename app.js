@@ -84,10 +84,13 @@ function limpiarCremasAntiguas() {
 
     if (item.cremas) {
       CREMAS.forEach(crema => {
-        const cantidad = Number(item.cremas[crema] || 0);
+        let cantidad = Number(item.cremas[crema] || 0);
+
+        if (cantidad > MAX_CREMA) cantidad = MAX_CREMA;
+        if (cantidad < 0) cantidad = 0;
 
         if (cantidad > 0) {
-          nuevasCremas[crema] = Math.min(cantidad, MAX_CREMA);
+          nuevasCremas[crema] = cantidad;
         }
       });
     }
@@ -290,25 +293,26 @@ function cambiarCrema(name, crema, delta) {
   const item = cart.find(p => p.name === name);
   if (!item) return;
 
-  // Solo permite las cremas oficiales
   if (!CREMAS.includes(crema)) return;
-
   if (!item.cremas) item.cremas = {};
 
   const actual = Number(item.cremas[crema] || 0);
+
+  // Si quiere aumentar y ya está en 2, no deja subir más
+  if (delta > 0 && actual >= MAX_CREMA) {
+    item.cremas[crema] = MAX_CREMA;
+    saveCart();
+    renderCart();
+    emitCart();
+    return;
+  }
+
   let nuevo = actual + delta;
 
-  // No baja de 0
   if (nuevo <= 0) {
     delete item.cremas[crema];
   } else {
-    // No permite más de 2 por cada crema
-    if (nuevo > MAX_CREMA) {
-      nuevo = MAX_CREMA;
-      alert(`Máximo ${MAX_CREMA} de ${crema} por producto.`);
-    }
-
-    item.cremas[crema] = nuevo;
+    item.cremas[crema] = Math.min(nuevo, MAX_CREMA);
   }
 
   limpiarCremasAntiguas();
