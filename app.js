@@ -1,7 +1,7 @@
 // ====== CONFIGURA TU NÚMERO DE WHATSAPP ======
 const WSP_NUMBER = "51910006174"; // SIN +
 
-// ====== LISTA DE CREMAS ======
+// ====== LISTA DE CREMAS OFICIALES ======
 const CREMAS = [
   "Mayonesa",
   "Vinagreta",
@@ -62,15 +62,39 @@ const $$ = (q, ctx = document) => Array.from(ctx.querySelectorAll(q));
 const money = n => `S/ ${Number(n).toFixed(2)}`;
 
 /* ====== ESTADO DEL CARRITO ====== */
-let cart = []; // [{name, price, qty, img, cremas}]
+let cart = [];
 const DELIVERY = 0;
 
 try {
   const saved = localStorage.getItem("malcas_cart");
   if (saved) cart = JSON.parse(saved);
-} catch (_) {}
+} catch (_) {
+  cart = [];
+}
 
 const saveCart = () => localStorage.setItem("malcas_cart", JSON.stringify(cart));
+
+/* ====== LIMPIAR CREMAS ANTIGUAS ====== */
+function limpiarCremasAntiguas() {
+  cart = cart.map(item => {
+    const nuevasCremas = {};
+
+    if (item.cremas) {
+      CREMAS.forEach(crema => {
+        if (item.cremas[crema]) {
+          nuevasCremas[crema] = item.cremas[crema];
+        }
+      });
+    }
+
+    return {
+      ...item,
+      cremas: nuevasCremas
+    };
+  });
+
+  saveCart();
+}
 
 /* ====== FILTROS / BUSCADOR ====== */
 let currentFilter = "all";
@@ -111,11 +135,15 @@ function openWhatsApp(rawText) {
     }, 1200);
   }
 
-  setTimeout(() => (clicking = false), 2500);
+  setTimeout(() => {
+    clicking = false;
+  }, 2500);
 }
 
 /* ====== INICIAL ====== */
 window.addEventListener("DOMContentLoaded", () => {
+  limpiarCremasAntiguas();
+
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -193,13 +221,6 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Arreglar productos antiguos guardados sin cremas
-  cart = cart.map(p => ({
-    ...p,
-    cremas: p.cremas || {}
-  }));
-  saveCart();
-
   renderCart();
   emitCart();
 });
@@ -224,6 +245,7 @@ function addToCart(item) {
     cart.push(item);
   }
 
+  limpiarCremasAntiguas();
   saveCart();
   renderCart();
   emitCart();
@@ -263,6 +285,7 @@ function cambiarCrema(name, crema, delta) {
   const item = cart.find(p => p.name === name);
   if (!item) return;
 
+  if (!CREMAS.includes(crema)) return;
   if (!item.cremas) item.cremas = {};
 
   const actual = item.cremas[crema] || 0;
@@ -274,6 +297,7 @@ function cambiarCrema(name, crema, delta) {
     item.cremas[crema] = nuevo;
   }
 
+  limpiarCremasAntiguas();
   saveCart();
   renderCart();
   emitCart();
@@ -284,6 +308,8 @@ function subtotal() {
 }
 
 function renderCart() {
+  limpiarCremasAntiguas();
+
   const count = cart.reduce((s, p) => s + p.qty, 0);
   const countEl = $("#cart-count");
 
@@ -399,6 +425,8 @@ function sendWhatsApp(e) {
   if (e && typeof e.preventDefault === "function") e.preventDefault();
   if (sending) return;
 
+  limpiarCremasAntiguas();
+
   const nombreEl = $("#cliente");
   const dirEl = $("#direccion");
   const pagoSel = document.querySelector('input[name="pago"]:checked');
@@ -407,7 +435,6 @@ function sendWhatsApp(e) {
   const direccion = (dirEl?.value || "").trim();
   const pago = pagoSel?.value || "";
 
-  // ---- VALIDACIONES ESTRICTAS ----
   if (cart.length === 0) {
     alert("Tu carrito está vacío. Agrega algún producto antes de enviar el pedido.");
     return;
@@ -449,13 +476,14 @@ function sendWhatsApp(e) {
     return;
   }
 
-  // Productos con cremas para WhatsApp
   const productosDetalle = cart.map(p => {
-    const cremasSeleccionadas = p.cremas && Object.keys(p.cremas).length > 0
-      ? Object.entries(p.cremas)
-          .map(([crema, cantidad]) => `   - ${crema} x${cantidad}`)
-          .join("\n")
-      : "   - Sin cremas";
+    const cremasSeleccionadas =
+      p.cremas && Object.keys(p.cremas).length > 0
+        ? Object.entries(p.cremas)
+            .filter(([crema]) => CREMAS.includes(crema))
+            .map(([crema, cantidad]) => `   - ${crema} x${cantidad}`)
+            .join("\n")
+        : "   - Sin cremas";
 
     return `🍗 ${p.qty}x ${p.name} - ${money(p.price * p.qty)}
 🥣 Cremas:
@@ -463,11 +491,13 @@ ${cremasSeleccionadas}`;
   }).join("\n\n");
 
   const productos = cart.map(p => {
-    const cremasTxt = p.cremas && Object.keys(p.cremas).length > 0
-      ? Object.entries(p.cremas)
-          .map(([crema, cantidad]) => `${crema} x${cantidad}`)
-          .join(" / ")
-      : "Sin cremas";
+    const cremasTxt =
+      p.cremas && Object.keys(p.cremas).length > 0
+        ? Object.entries(p.cremas)
+            .filter(([crema]) => CREMAS.includes(crema))
+            .map(([crema, cantidad]) => `${crema} x${cantidad}`)
+            .join(" / ")
+        : "Sin cremas";
 
     return `${p.qty}x ${p.name} (${cremasTxt})`;
   }).join(", ");
@@ -519,7 +549,6 @@ Gracias por su pedido ❤️`;
     items
   });
 
-  // Evitar doble envío
   sending = true;
 
   const btn = $("#sendWhatsApp");
@@ -530,7 +559,6 @@ Gracias por su pedido ❤️`;
     btn.textContent = "Enviando…";
   }
 
-  // Guardar en backend; si falla igual abre WhatsApp
   fetch("https://pollosmalcas.xyz/backend/guardar_pedido.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
