@@ -8,6 +8,9 @@ const CREMAS = [
   "Ají"
 ];
 
+// Máximo permitido por cada crema
+const MAX_CREMA = 2;
+
 // ====== GA4 helper (para enviar eventos de Analytics) ======
 function gaSafeEvent(name, params = {}) {
   if (typeof gtag === "function") {
@@ -81,8 +84,10 @@ function limpiarCremasAntiguas() {
 
     if (item.cremas) {
       CREMAS.forEach(crema => {
-        if (item.cremas[crema]) {
-          nuevasCremas[crema] = item.cremas[crema];
+        const cantidad = Number(item.cremas[crema] || 0);
+
+        if (cantidad > 0) {
+          nuevasCremas[crema] = Math.min(cantidad, MAX_CREMA);
         }
       });
     }
@@ -285,15 +290,24 @@ function cambiarCrema(name, crema, delta) {
   const item = cart.find(p => p.name === name);
   if (!item) return;
 
+  // Solo permite las cremas oficiales
   if (!CREMAS.includes(crema)) return;
+
   if (!item.cremas) item.cremas = {};
 
-  const actual = item.cremas[crema] || 0;
-  const nuevo = actual + delta;
+  const actual = Number(item.cremas[crema] || 0);
+  let nuevo = actual + delta;
 
+  // No baja de 0
   if (nuevo <= 0) {
     delete item.cremas[crema];
   } else {
+    // No permite más de 2 por cada crema
+    if (nuevo > MAX_CREMA) {
+      nuevo = MAX_CREMA;
+      alert(`Máximo ${MAX_CREMA} de ${crema} por producto.`);
+    }
+
     item.cremas[crema] = nuevo;
   }
 
@@ -363,6 +377,8 @@ function renderCart() {
                 </div>
               `).join("")}
             </div>
+
+            <small class="cremas-limit">Máximo 2 por cada crema</small>
           </div>
         </div>
       `;
