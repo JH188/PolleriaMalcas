@@ -4,12 +4,8 @@ const WSP_NUMBER = "51910006174"; // SIN +
 // ====== LISTA DE CREMAS ======
 const CREMAS = [
   "Mayonesa",
-  "Ketchup",
-  "Ají",
-  "Mostaza",
-  "Golf",
-  "Tártara",
-  "Rocoto"
+  "Vinagreta",
+  "Ají"
 ];
 
 // ====== GA4 helper (para enviar eventos de Analytics) ======
@@ -305,37 +301,43 @@ function renderCart() {
       if (!p.cremas) p.cremas = {};
 
       const row = document.createElement("div");
-      row.className = "ci";
+      row.className = "ci ci-pro";
 
       row.innerHTML = `
-        <img src="${p.img}" alt="${p.name}">
+        <img src="${p.img}" alt="${p.name}" class="ci-img">
 
-        <div>
-          <h5>${p.name}</h5>
-          <small>${money(p.price)}</small>
+        <div class="ci-content">
+          <div class="ci-top">
+            <div>
+              <h5>${p.name}</h5>
+              <small>${money(p.price)}</small>
+            </div>
+
+            <div class="qty">
+              <button aria-label="Disminuir">−</button>
+              <strong>${p.qty}</strong>
+              <button aria-label="Aumentar">+</button>
+              <button class="icon-btn" title="Quitar">🗑️</button>
+            </div>
+          </div>
 
           <div class="cremas-box">
-            <p class="cremas-title">🥣 Cremas:</p>
+            <p class="cremas-title">🥣 Elige tus cremas</p>
 
-            ${CREMAS.map(crema => `
-              <div class="crema-row">
-                <span>${crema}</span>
+            <div class="cremas-grid">
+              ${CREMAS.map(crema => `
+                <div class="crema-row">
+                  <span>${crema}</span>
 
-                <div class="crema-controls">
-                  <button type="button" class="crema-minus" data-name="${p.name}" data-crema="${crema}">−</button>
-                  <strong>${p.cremas?.[crema] || 0}</strong>
-                  <button type="button" class="crema-plus" data-name="${p.name}" data-crema="${crema}">+</button>
+                  <div class="crema-controls">
+                    <button type="button" class="crema-minus" data-name="${p.name}" data-crema="${crema}">−</button>
+                    <strong>${p.cremas?.[crema] || 0}</strong>
+                    <button type="button" class="crema-plus" data-name="${p.name}" data-crema="${crema}">+</button>
+                  </div>
                 </div>
-              </div>
-            `).join("")}
+              `).join("")}
+            </div>
           </div>
-        </div>
-
-        <div class="qty">
-          <button aria-label="Disminuir">−</button>
-          <strong>${p.qty}</strong>
-          <button aria-label="Aumentar">+</button>
-          <button class="icon-btn" title="Quitar">🗑️</button>
         </div>
       `;
 
