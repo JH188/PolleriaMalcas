@@ -1222,28 +1222,101 @@ html { scroll-behavior: smooth; }
 .invalid { outline: 2px solid #ef4444; border-radius: 8px; }
 
 
-/* ====== CREMAS EN CARRITO ====== */
-.ci {
-  align-items: start;
+/* ====== CARRITO PRO + CREMAS BONITAS ====== */
+
+.cart-items {
+  padding: 14px;
+  gap: 14px;
 }
 
-.ci > div:nth-child(2) {
+.cart .ci,
+.cart .ci-pro {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 12px;
+  border: 1px solid #f1f1f1;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(0,0,0,.06);
+}
+
+.ci-img {
+  width: 64px !important;
+  height: 64px !important;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.ci-content {
   min-width: 0;
 }
 
+.ci-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ci-top h5 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  color: #222;
+}
+
+.ci-top small {
+  display: block;
+  margin-top: 2px;
+  color: #777;
+  font-size: 12px;
+}
+
+.ci-top .qty {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.ci-top .qty button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.ci-top .qty .icon-btn {
+  width: 30px;
+  height: 30px;
+  background: #fff5f5;
+  border-color: #ffe0e0;
+}
+
 .cremas-box {
-  margin-top: 8px;
-  padding: 8px;
-  background: #fff7ed;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fff7ed, #fff);
   border: 1px solid #fed7aa;
-  border-radius: 12px;
 }
 
 .cremas-title {
-  margin: 0 0 6px;
-  font-size: 12px;
+  margin: 0 0 8px;
+  font-size: 13px;
   font-weight: 800;
   color: #9a3412;
+}
+
+.cremas-grid {
+  display: grid;
+  gap: 7px;
 }
 
 .crema-row {
@@ -1251,73 +1324,69 @@ html { scroll-behavior: smooth; }
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin: 5px 0;
-  font-size: 12px;
-  color: #333;
+  padding: 7px 8px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #f5e7d8;
 }
 
 .crema-row span {
-  flex: 1;
-  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
 }
 
 .crema-controls {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .crema-controls button {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border: none;
-  border-radius: 7px;
+  border-radius: 8px;
   background: #f97316;
-  color: #fff;
-  font-weight: 800;
+  color: white;
+  font-weight: 900;
   cursor: pointer;
   line-height: 1;
 }
 
-.crema-controls button:hover {
-  filter: brightness(1.05);
-}
-
 .crema-controls strong {
-  min-width: 14px;
+  min-width: 16px;
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 800;
 }
 
-/* Ajuste para que el carrito no se vea aplastado */
-.cart-items {
-  padding-bottom: 12px;
-}
-
-.cart .ci {
-  grid-template-columns: 56px 1fr auto;
-  gap: 10px;
-  padding: 10px;
-}
-
-/* En celular: que las cremas se vean más ordenadas */
+/* Móvil */
 @media (max-width: 520px) {
-  .cart .ci {
-    grid-template-columns: 52px 1fr;
+  .cart .ci,
+  .cart .ci-pro {
+    grid-template-columns: 58px 1fr;
+    padding: 10px;
   }
 
-  .cart .ci .qty {
-    grid-column: 1 / -1;
-    justify-content: flex-end;
-    margin-top: 6px;
+  .ci-img {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .ci-top {
+    flex-direction: column;
+  }
+
+  .ci-top .qty {
+    align-self: flex-end;
   }
 
   .cremas-box {
-    margin-top: 8px;
-    padding: 8px;
+    padding: 9px;
   }
 
   .crema-row {
-    font-size: 12px;
+    padding: 7px;
   }
 }
