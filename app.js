@@ -1,6 +1,15 @@
 // ====== CONFIGURA TU NÚMERO DE WHATSAPP ======
 const WSP_NUMBER = "51910006174"; // SIN +
-
+// ====== LISTA DE CREMAS ======
+const CREMAS = [
+  "Mayonesa",
+  "Ketchup",
+  "Ají",
+  "Mostaza",
+  "Golf",
+  "Tártara",
+  "Rocoto"
+];
 // ====== GA4 helper (para enviar eventos de Analytics) ======
 function gaSafeEvent(name, params = {}) {
   if (typeof gtag === "function") {
