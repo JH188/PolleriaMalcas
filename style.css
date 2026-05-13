@@ -1390,3 +1390,10 @@ html { scroll-behavior: smooth; }
     padding: 7px;
   }
 }
+.cremas-limit {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  color: #9a3412;
+  font-weight: 700;
+}
