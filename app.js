@@ -136,6 +136,7 @@ window.addEventListener("DOMContentLoaded", () => {
         price: Number(card.dataset.price),
         img:   card.querySelector("img")?.getAttribute("src") || "",
         qty:   1
+        cremas: {}
       };
       addToCart(item);
     });
@@ -200,19 +201,25 @@ function removeFromCart(name) {
   emitCart();
 }
 
-function changeQty(name, delta) {
-  const it = cart.find(p => p.name === name);
-  if (!it) return;
-  it.qty += delta;
-  if (it.qty <= 0) {
-    removeFromCart(it.name);
-    return;
+function cambiarCrema(name, crema, delta) {
+  const item = cart.find(p => p.name === name);
+  if (!item) return;
+
+  if (!item.cremas) item.cremas = {};
+
+  const actual = item.cremas[crema] || 0;
+  const nuevo = actual + delta;
+
+  if (nuevo <= 0) {
+    delete item.cremas[crema];
+  } else {
+    item.cremas[crema] = nuevo;
   }
+
   saveCart();
   renderCart();
   emitCart();
 }
-
 function subtotal() {
   return cart.reduce((s, p) => s + p.price * p.qty, 0);
 }
@@ -232,23 +239,48 @@ function renderCart() {
     cart.forEach(p => {
       const row = document.createElement("div");
       row.className = "ci";
-      row.innerHTML = `
-        <img src="${p.img}" alt="${p.name}">
-        <div>
-          <h5>${p.name}</h5>
-          <small>${money(p.price)}</small>
+     row.innerHTML = `
+  <img src="${p.img}" alt="${p.name}">
+
+  <div>
+    <h5>${p.name}</h5>
+    <small>${money(p.price)}</small>
+
+    <div class="cremas-box">
+      <p class="cremas-title">🥣 Cremas:</p>
+
+      ${CREMAS.map(crema => `
+        <div class="crema-row">
+          <span>${crema}</span>
+
+          <div class="crema-controls">
+            <button type="button" class="crema-minus" data-name="${p.name}" data-crema="${crema}">−</button>
+            <strong>${p.cremas?.[crema] || 0}</strong>
+            <button type="button" class="crema-plus" data-name="${p.name}" data-crema="${crema}">+</button>
+          </div>
         </div>
-        <div class="qty">
-          <button aria-label="Disminuir">−</button>
-          <strong>${p.qty}</strong>
-          <button aria-label="Aumentar">+</button>
-          <button class="icon-btn" title="Quitar">🗑️</button>
-        </div>`;
+      `).join("")}
+    </div>
+  </div>
+
+  <div class="qty">
+    <button aria-label="Disminuir">−</button>
+    <strong>${p.qty}</strong>
+    <button aria-label="Aumentar">+</button>
+    <button class="icon-btn" title="Quitar">🗑️</button>
+  </div>`;
 
       const [minus, , plus, trash] = row.querySelectorAll(".qty > *");
       minus.addEventListener("click", () => changeQty(p.name, -1));
       plus.addEventListener("click", () => changeQty(p.name, 1));
       trash.addEventListener("click", () => removeFromCart(p.name));
+      row.querySelectorAll(".crema-minus").forEach(btn => {
+  btn.addEventListener("click", () => cambiarCrema(btn.dataset.name, btn.dataset.crema, -1));
+});
+
+row.querySelectorAll(".crema-plus").forEach(btn => {
+  btn.addEventListener("click", () => cambiarCrema(btn.dataset.name, btn.dataset.crema, 1));
+});
 
       list.appendChild(row);
     });
