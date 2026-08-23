@@ -899,6 +899,7 @@ html { scroll-behavior: smooth; }
   top: 0;
   width: min(420px, 92%);
   height: 100vh;
+  height: 100dvh; /* 👈 FIX: usa la altura real visible en móviles (evita que el navbar tape contenido) */
   background: linear-gradient(180deg, #fff, #fff8f3);
   box-shadow: -12px 0 40px rgba(0, 0, 0, .25);
   transition: right .45s cubic-bezier(.25, .1, .25, 1);
@@ -919,6 +920,7 @@ html { scroll-behavior: smooth; }
   color: #fff;
   font-weight: 700;
   box-shadow: 0 4px 16px rgba(0, 0, 0, .15);
+  flex-shrink: 0; /* nunca se encoge */
 }
 
 .icon-btn {
@@ -937,7 +939,9 @@ html { scroll-behavior: smooth; }
 
 .cart-items {
   flex: 1;
+  min-height: 0; /* 👈 FIX PRINCIPAL: sin esto el contenedor no se encoge y el scroll interno nunca se activa */
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* scroll suave en iOS */
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -966,6 +970,7 @@ html { scroll-behavior: smooth; }
   padding: 0 1.2rem 1rem;
   display: grid;
   gap: .6rem;
+  flex-shrink: 0; /* nunca se encoge */
 }
 .cart-note input,
 .cart-note select {
@@ -999,6 +1004,7 @@ html { scroll-behavior: smooth; }
   display: grid;
   gap: .6rem;
   box-shadow: 0 -6px 18px rgba(0,0,0,.05);
+  flex-shrink: 0; /* nunca se encoge — siempre visible abajo */
 }
 .totals {
   display: flex;
