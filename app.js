@@ -5,7 +5,7 @@ const WSP_NUMBER = "51910006174"; // SIN +
 const CREMAS = [
   "Mayonesa",
   "Vinagreta",
-  "Ají"
+  "Ají",
   "Ketchup",
   "Mostaza"
 ];
@@ -25,15 +25,28 @@ function gaSafeEvent(name, params = {}) {
 }
 
 /* ====== Realtime Admin (entre pestañas del mismo dominio) ====== */
-const bc = new BroadcastChannel("malcas_realtime");
+// FIX móvil: BroadcastChannel no está disponible en todos los navegadores/contextos.
+// Si falla, el carrito sigue funcionando normalmente usando localStorage como respaldo.
+let bc = null;
+
+try {
+  if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+    bc = new BroadcastChannel("malcas_realtime");
+  }
+} catch (e) {
+  bc = null;
+  console.warn("[RT] BroadcastChannel no disponible", e);
+}
 
 function emit(type, payload) {
   const msg = { type, payload, at: Date.now() };
 
-  try {
-    bc.postMessage(msg);
-  } catch (e) {
-    console.warn("[RT] BC postMessage falló", e);
+  if (bc) {
+    try {
+      bc.postMessage(msg);
+    } catch (e) {
+      console.warn("[RT] BC postMessage falló", e);
+    }
   }
 
   try {
@@ -57,7 +70,13 @@ function saveOrderLocally(order) {
   } catch (_) {}
 
   list.unshift(order);
-  localStorage.setItem(key, JSON.stringify(list));
+
+  try {
+    localStorage.setItem(key, JSON.stringify(list));
+  } catch (e) {
+    console.warn("No se pudo guardar el pedido localmente", e);
+  }
+
   emit("order_new", order);
 }
 
@@ -77,7 +96,13 @@ try {
   cart = [];
 }
 
-const saveCart = () => localStorage.setItem("malcas_cart", JSON.stringify(cart));
+const saveCart = () => {
+  try {
+    localStorage.setItem("malcas_cart", JSON.stringify(cart));
+  } catch (e) {
+    console.warn("No se pudo guardar el carrito en este navegador", e);
+  }
+};
 
 /* ====== LIMPIAR CREMAS ANTIGUAS ====== */
 function limpiarCremasAntiguas() {
@@ -421,6 +446,7 @@ function renderCart() {
 function openCart() {
   $("#cart")?.classList.add("open");
   $("#overlay")?.classList.add("show");
+  document.body.classList.add("body-lock");
 
   const items = cart.map(p => ({
     item_name: p.name,
@@ -438,6 +464,7 @@ function openCart() {
 function closeCart() {
   $("#cart")?.classList.remove("open");
   $("#overlay")?.classList.remove("show");
+  document.body.classList.remove("body-lock");
 }
 
 /* ====== ENVIAR PEDIDO A WHATSAPP Y GUARDAR EN BACKEND ====== */
