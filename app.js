@@ -565,7 +565,7 @@ ${productosDetalle}
 
 💰 *Total:* S/ ${total}
 
-Gracias por su pedido ❤️`;
+Quedo pendiente de la confirmación de mi pedido 😊`;
 
   const order = {
     id: "ORD-" + Date.now(),
