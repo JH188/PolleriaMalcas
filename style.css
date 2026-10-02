@@ -1403,3 +1403,52 @@ html { scroll-behavior: smooth; }
   color: #9a3412;
   font-weight: 700;
 }
+
+/* ===== FIX FINAL CARRITO MÓVIL 2026-10 =====
+   Mantiene el diseño actual. Solo estabiliza altura, scroll y controles en móvil. */
+.cart {
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+}
+
+.cart-items {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.cart-note,
+.cart-foot {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 768px) {
+  .cart {
+    width: 100%;
+    max-width: 100%;
+    right: -100%;
+    border-radius: 0;
+  }
+
+  .cart.open {
+    right: 0;
+  }
+
+  .cart-items {
+    min-height: 0;
+    overflow-y: auto;
+    touch-action: pan-y;
+  }
+
+  /* Evita que el pie tape productos/cremas al hacer scroll */
+  .cart-foot {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+  }
+}
