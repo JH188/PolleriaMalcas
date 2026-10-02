@@ -6,6 +6,8 @@ const CREMAS = [
   "Mayonesa",
   "Vinagreta",
   "Ají"
+  "Ketchup",
+  "Mostaza"
 ];
 
 // Máximo permitido por cada crema
